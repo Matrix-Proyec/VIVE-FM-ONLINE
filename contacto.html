@@ -1,0 +1,519 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Publica tu anuncio - Vive FM Online</title>
+  <style>
+    /* Reset and base styles */
+    *, *::before, *::after {
+      box-sizing: border-box;
+    }
+    body {
+      margin: 0;
+      font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+      color: #fff;
+      background: url('https://images.unsplash.com/photo-1504384308090-c894fdcc538d?ixlib=rb-4.0.3&auto=format&fit=crop&w=1920&q=80') no-repeat center center fixed;
+      background-size: cover;
+      display: flex;
+      flex-direction: column;
+      min-height: 100vh;
+    }
+
+    /* Overlay for better text readability */
+    body::before {
+      content: '';
+      position: fixed;
+      top:0; left:0; right:0; bottom:0;
+      background: rgba(0,0,0,0.6);
+      z-index: -1;
+    }
+
+    header {
+      background-color: rgba(0, 0, 0, 0.7);
+      padding: 1.25rem 1rem;
+      text-align: center;
+      position: relative;
+      overflow: hidden;
+    }
+
+    /* Animated heading */
+    header h1 {
+      font-size: 2.5rem;
+      font-weight: 700;
+      letter-spacing: 0.1em;
+      color: #00ffea;
+      animation: neonGlow 3s ease-in-out infinite alternate;
+      margin: 0;
+    }
+
+    @keyframes neonGlow {
+      0%, 100% {
+        text-shadow:
+          0 0 5px #00ffea,
+          0 0 10px #00ffea,
+          0 0 20px #00ffea,
+          0 0 40px #00ffea,
+          0 0 80px #00ffea;
+        color: #00ffea;
+      }
+      50% {
+        text-shadow:
+          0 0 10px #00bfa5,
+          0 0 20px #00bfa5,
+          0 0 30px #00bfa5,
+          0 0 50px #00bfa5;
+        color: #00bfa5;
+      }
+    }
+
+    main {
+      flex-grow: 1;
+      background-color: rgba(0, 0, 0, 0.65);
+      margin: 1rem auto;
+      max-width: 720px;
+      border-radius: 12px;
+      padding: 1.5rem 2rem 3rem;
+      box-shadow: 0 0 15px #00ffea88;
+    }
+
+    /* Contact info section */
+    .contact-info {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 1rem;
+      justify-content: center;
+      margin-bottom: 2rem;
+      font-size: 1.1rem;
+      line-height: 1.4;
+    }
+    .contact-item {
+      flex: 1 1 200px;
+      background: rgba(0, 255, 234, 0.1);
+      border-radius: 8px;
+      padding: 0.75rem 1rem;
+      text-align: center;
+      user-select: none;
+      transition: background-color 0.3s ease;
+    }
+    .contact-item:hover,
+    .contact-item:focus-within {
+      background: rgba(0, 255, 234, 0.3);
+    }
+    .contact-item a {
+      color: #00ffea;
+      text-decoration: none;
+      font-weight: 600;
+      word-break: break-word;
+    }
+    .contact-item a:focus,
+    .contact-item a:hover {
+      text-decoration: underline;
+      outline: none;
+    }
+
+    /* Button to return */
+    .btn-return {
+      display: inline-block;
+      margin: 0 auto 2rem;
+      padding: 0.65rem 1.5rem;
+      background: #00ffea;
+      color: #000;
+      font-weight: 700;
+      border: none;
+      border-radius: 30px;
+      cursor: pointer;
+      text-align: center;
+      font-size: 1.1rem;
+      transition: background-color 0.3s ease;
+      text-decoration: none;
+      user-select: none;
+    }
+    .btn-return:hover,
+    .btn-return:focus {
+      background: #00bfa5;
+      outline: none;
+    }
+
+    /* Form styles */
+    form {
+      background: rgba(0, 255, 234, 0.1);
+      padding: 1rem 1.5rem;
+      border-radius: 12px;
+      box-shadow: 0 0 12px #00ffea88 inset;
+      max-width: 100%;
+    }
+    form fieldset {
+      border: none;
+      margin: 0 0 1rem 0;
+      padding: 0;
+    }
+    form legend {
+      font-weight: 700;
+      font-size: 1.25rem;
+      margin-bottom: 1rem;
+      text-align: center;
+      color: #00ffea;
+      text-shadow: 0 0 5px #00bfa5;
+    }
+    label {
+      display: block;
+      margin-bottom: 0.25rem;
+      font-weight: 600;
+      color: #00ffea;
+    }
+    input[type="text"],
+    input[type="email"],
+    input[type="tel"],
+    textarea {
+      width: 100%;
+      padding: 0.5rem 0.75rem;
+      margin-bottom: 1rem;
+      border-radius: 8px;
+      border: 2px solid #00ffea;
+      background: rgba(0,0,0,0.3);
+      color: #fff;
+      font-size: 1rem;
+      font-family: inherit;
+      transition: border-color 0.3s ease;
+      resize: vertical;
+    }
+    input[type="text"]:focus,
+    input[type="email"]:focus,
+    input[type="tel"]:focus,
+    textarea:focus {
+      border-color: #00bfa5;
+      outline: none;
+      background: rgba(0,0,0,0.5);
+    }
+
+    /* Buttons container */
+    .form-buttons {
+      display: flex;
+      justify-content: center;
+      gap: 1rem;
+      flex-wrap: wrap;
+    }
+    button {
+      cursor: pointer;
+      font-weight: 700;
+      font-size: 1rem;
+      padding: 0.65rem 1.5rem;
+      border-radius: 30px;
+      border: none;
+      transition: background-color 0.3s ease;
+      user-select: none;
+    }
+    button[type="submit"] {
+      background: #00ffea;
+      color: #000;
+    }
+    button[type="submit"]:hover,
+    button[type="submit"]:focus {
+      background: #00bfa5;
+      outline: none;
+    }
+    button[type="reset"] {
+      background: #ff004d;
+      color: #fff;
+    }
+    button[type="reset"]:hover,
+    button[type="reset"]:focus {
+      background: #b30037;
+      outline: none;
+    }
+
+    /* Footer styles */
+    footer {
+      background-color: rgba(0, 0, 0, 0.7);
+      text-align: center;
+      color: #00ffea;
+      font-weight: 500;
+      padding: 0.75rem 1rem;
+      font-size: 0.9rem;
+      user-select: none;
+    }
+
+    /* Responsive */
+    @media (max-width: 480px) {
+      header h1 {
+        font-size: 1.8rem;
+      }
+      main {
+        margin: 0.5rem 1rem 1.5rem;
+        padding: 1rem 1rem 2rem;
+      }
+      .contact-info {
+        flex-direction: column;
+      }
+      .contact-item {
+        flex: 1 1 100%;
+      }
+    }
+    
+    
+    
+    
+    /* Estilos para el mensaje de advertencia */
+    #warning-message {
+      display: none;
+      position: fixed;
+      top: 0; left: 0; right: 0;
+      background-color: #ffcc00;
+      color: #000;
+      font-weight: bold;
+      padding: 1em;
+      text-align: center;
+      z-index: 9999;
+      font-family: Arial, sans-serif;
+    }
+  </style>
+</head>
+<body>
+    
+    <div id="warning-message" role="alert" aria-live="assertive">
+    Atención: esta páginas intenta proteger su código fuente.
+  
+  <h1>Disculpa está acción está bloqueada</h1>
+  <p></p>
+</div>
+    
+  <header>
+    <h1 tabindex="0" aria-label="Publica tu anuncio - contactar con el administrador">Publica tu anuncio</h1>
+  </header>
+
+  <main>
+    <!-- Contact Information -->
+    <section aria-labelledby="contact-admin-heading" class="contact-info" role="region">
+      <h2 id="contact-admin-heading" class="sr-only">Contactar con el administrador</h2>
+
+      <div class="contact-item" tabindex="0" aria-label="Facebook de Vive FM Online">
+        <strong>Facebook:</strong><br />
+        <a href=" https://facebook.com/groups/1390124162882958/" target="_blank" rel="noopener noreferrer">facebook.com/vivefmonline</a>
+      </div>
+
+      <div class="contact-item" tabindex="0" aria-label="Grupo de WhatsApp de Vive FM Online">
+        <strong>Grupo WhatsApp:</strong><br />
+        <a href="https://chat.whatsapp.com/JLIjsB9t6VG70JwjL5A0ai " target="_blank" rel="noopener noreferrer">Únete al grupo</a>
+      </div>
+
+      <div class="contact-item" tabindex="0" aria-label="Correo electrónico de Vive FM Online">
+        <strong>Correo electrónico:</strong><br />
+        <a href="mailto: vivefm01@gmail.com">vivefm01@gmail.com</a>
+      </div>
+    </section>
+
+    <!-- Button to return to publicidad page -->
+    <a href="publicidad.html" class="btn-return" aria-label="Volver a la página de publicidad">← Volver a Publicidad</a>
+
+    <!-- Subscription / Contact Form -->
+    <form id="contactForm" aria-describedby="formDescription" novalidate>
+      <legend>Suscríbete y obtén descuento para publicidad</legend>
+      <p id="formDescription" style="text-align:center; color:#00ffea; margin-bottom: 1rem;">
+        Rellena el formulario para contactar y unirte al grupo de WhatsApp para descuentos.
+      </p>
+
+      <fieldset>
+        <label for="fullName">Nombre completo <span aria-hidden="true">*</span></label>
+        <input type="text" id="fullName" name="fullName" placeholder="Tu nombre completo" required aria-required="true" autocomplete="name" />
+      </fieldset>
+
+      <fieldset>
+        <label for="phoneNumber">Número de teléfono WhatsApp <span aria-hidden="true">*</span></label>
+        <input type="tel" id="phoneNumber" name="phoneNumber" placeholder="+34 600 000 000" pattern="^\+?[0-9\s\-]{7,15}$" required aria-required="true" autocomplete="tel" />
+      </fieldset>
+
+      <fieldset>
+        <label for="email">Correo electrónico <span aria-hidden="true">*</span></label>
+        <input type="email" id="email" name="email" placeholder="correo@ejemplo.com" required aria-required="true" autocomplete="email" />
+      </fieldset>
+
+      <fieldset>
+        <label for="message">Mensaje / Comentario</label>
+        <textarea id="message" name="message" rows="4" placeholder="Escribe tu mensaje o comentario aquí"></textarea>
+      </fieldset>
+
+      <div class="form-buttons">
+        <button type="submit" aria-label="Enviar formulario de contacto">Enviar</button>
+        <button type="reset" aria-label="Resetear formulario de contacto">Resetear</button>
+      </div>
+    </form>
+  </main>
+
+  <footer>
+    &copy; Vive FM Online siempre contigo
+  </footer>
+
+  <script>
+    // Select form and elements
+    const form = document.getElementById('contactForm');
+    const fullNameInput = form.fullName;
+    const phoneInput = form.phoneNumber;
+    const emailInput = form.email;
+    const messageInput = form.message;
+
+    // WhatsApp group invite link
+    const whatsappGroupLink = "https://chat.whatsapp.com/yourgroupinvitecode"; // Replace with your real group link
+
+    // Load saved data from localStorage on page load
+    window.addEventListener('DOMContentLoaded', () => {
+      const savedData = localStorage.getItem('vivefm_contact_data');
+      if (savedData) {
+        try {
+          const data = JSON.parse(savedData);
+          if (data.fullName) fullNameInput.value = data.fullName;
+          if (data.phoneNumber) phoneInput.value = data.phoneNumber;
+          if (data.email) emailInput.value = data.email;
+          if (data.message) messageInput.value = data.message;
+        } catch (e) {
+          console.error('Error parsing saved contact data:', e);
+        }
+      }
+    });
+
+    // Save form data to localStorage on input change
+    form.addEventListener('input', () => {
+      const data = {
+        fullName: fullNameInput.value.trim(),
+        phoneNumber: phoneInput.value.trim(),
+        email: emailInput.value.trim(),
+        message: messageInput.value.trim()
+      };
+      localStorage.setItem('vivefm_contact_data', JSON.stringify(data));
+    });
+
+    // Form validation helper
+    function validateForm() {
+      // Check required fields
+      if (!fullNameInput.value.trim()) {
+        alert('Por favor, ingresa tu nombre completo.');
+        fullNameInput.focus();
+        return false;
+      }
+      if (!phoneInput.value.trim()) {
+        alert('Por favor, ingresa tu número de teléfono WhatsApp.');
+        phoneInput.focus();
+        return false;
+      }
+      // Simple phone pattern check
+      const phonePattern = /^\+?[0-9\s\-]{7,15}$/;
+      if (!phonePattern.test(phoneInput.value.trim())) {
+        alert('Por favor, ingresa un número de teléfono válido.');
+        phoneInput.focus();
+        return false;
+      }
+      if (!emailInput.value.trim()) {
+        alert('Por favor, ingresa tu correo electrónico.');
+        emailInput.focus();
+        return false;
+      }
+      // Simple email validation
+      const emailPattern = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+      if (!emailPattern.test(emailInput.value.trim())) {
+        alert('Por favor, ingresa un correo electrónico válido.');
+        emailInput.focus();
+        return false;
+      }
+      return true;
+    }
+
+    // Send data by WhatsApp
+    form.addEventListener('submit', (e) => {
+      e.preventDefault();
+
+      if (!validateForm()) {
+        return;
+      }
+
+      // Prepare message text for WhatsApp
+      const messageLines = [
+        '📣 *Solicitud de publicidad y suscripción Vive FM Online*',
+        `Nombre completo: ${fullNameInput.value.trim()}`,
+        `Teléfono WhatsApp: ${phoneInput.value.trim()}`,
+        `Correo electrónico: ${emailInput.value.trim()}`,
+        `Mensaje: ${messageInput.value.trim() || '(Sin mensaje)'}`,
+      ];
+
+      const encodedMessage = encodeURIComponent(messageLines.join('\n'));
+
+      // Open WhatsApp group link with message pre-filled
+      // Note: WhatsApp group invites do not support pre-filled messages via URL,
+      // so instead we will open the group link in a new tab and alert the user to send the message manually.
+      // Alternatively, we can open a chat with the admin phone number if available.
+      // For demonstration, open WhatsApp Web chat with admin (replace adminPhone)
+      // If no admin phone, just open the group link
+
+      // Admin phone example (international format without +): +58000000
+      const adminPhone = ""; // Leave empty if not available
+
+      if (adminPhone) {
+        // Open chat with admin phone and message
+        const waUrl = `https://wa.me/adminPhone?text=${adminPhone}?text=adminPhone?text=${encodedMessage}`;
+        window.open(waUrl, '_blank', 'noopener');
+      } else {
+        // Open group invite link
+        window.open(whatsappGroupLink, '_blank', 'noopener');
+        alert('En estos momentos este sistema se encuentra inactivo Te puedes comunicar por la opción grupo WhatsApp..');
+      }
+
+      // Optionally, clear form and localStorage on success
+      // But we keep data in case user wants to edit or re-send
+      // Uncomment next lines if you want to clear form after sending:
+      // form.reset();
+      // localStorage.removeItem('vivefm_contact_data');
+    });
+
+    // Accessibility: add .sr-only class for screen reader only text
+    const style = document.createElement('style');
+    style.textContent = `
+      .sr-only {
+        position: absolute !important;
+        width: 1px !important;
+        height: 1px !important;
+        padding: 0 !important;
+        margin: -1px !important;
+        overflow: hidden !important;
+        clip: rect(0,0,0,0) !important;
+        border: 0 !important;
+      }
+    `;
+    document.head.appendChild(style);
+    
+    
+    
+    
+     // Función para mostrar el mensaje de advertencia
+    function showWarning() {
+      const warning = document.getElementById('warning-message');
+      warning.style.display = 'block';
+      // Oculta el mensaje después de 3 segundos
+      setTimeout(() => {
+        warning.style.display = 'none';
+      }, 3000);
+    }
+
+    // Deshabilitar clic derecho (abrir menú contextual)
+    window.addEventListener('contextmenu', function(event) {
+      event.preventDefault();
+      showWarning();
+    });
+
+    // Detectar teclas que abren herramientas de desarrollo
+    window.addEventListener('keydown', function(event) {
+      // F12
+      if (event.key === 'F12') {
+        event.preventDefault();
+        showWarning();
+      }
+      // Ctrl+Shift+I, Ctrl+Shift+J, Ctrl+U
+      if (
+        (event.ctrlKey && event.shiftKey && (event.key === 'I' || event.key === 'J')) ||
+        (event.ctrlKey && event.key === 'U')
+      ) {
+        event.preventDefault();
+        showWarning();
+      }
+    });
+  </script>
+</body>
+</html>

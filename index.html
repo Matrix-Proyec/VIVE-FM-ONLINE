@@ -1,1050 +1,577 @@
+
 <!DOCTYPE html>
-<!-- saved from url=(0050)https://gabriel2000-spec.github.io/VIVE-FM-ONLINE/ -->
-<html lang="es"><head><meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
-  
-  <meta name="viewport" content="width=device-width, initial-scale=1">
-  <title>vive fm Online  Siempre Contigo</title>
-  <meta name="description" content="Página oficial de Vive FM Online, noticias, radio streaming, concursos y más.">
+<html lang="es">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>VIVE FM - Venezuela</title>
+  <link href="https://fonts.googleapis.com/css2?family=Pacifico&family=Roboto&display=swap" rel="stylesheet" />
   <style>
-    /* Reset & base */
-    *, *::before, *::after {
-      box-sizing: border-box;
-    }
-    body {
-      margin: 0;
-      font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-      background: #f0f4f8;
-      color: #222;
-      min-height: 100vh;
-      display: flex;
-      flex-direction: column;
-    }
-    a {
-      color: #0066ff;
-      text-decoration: none;
-    }
-    a:hover, a:focus {
-      text-decoration: underline;
-    }
-    button {
-      cursor: pointer;
-      border: none;
-      border-radius: 5px;
-      font-weight: 600;
-      transition: background-color 0.3s ease;
-    }
-    img {
-      max-width: 100%;
-      height: auto;
-      display: block;
-    }
-
-    /* Header */
-
-    header {
-      background: linear-gradient(90deg, #ff416c, #ff4b2b);
+    /* --- estilos de bienvenida --- */
+    #welcome-screen {
+      position: fixed;
+      top: 0; left: 0; right: 0; bottom: 0;
+      background: #000;
       color: #fff;
-      padding: 0.5rem 1rem;
-      display: flex;
-      align-items: center;
-      justify-content: space-between;
-      position: relative;
-    }
-    /* Logo */
-    .logo-container {
-      display: flex;
-      align-items: center;
-      gap: 0.5rem;
-    }
-    .logo-container img {
-      width: 48px;
-      height: 48px;
-      border-radius: 6px;
-      border: 2px solid #fff;
-      background: #fff;
-    }
-    .logo-text {
-      font-size: 1.25rem;
-      font-weight: 700;
-      user-select: none;
-    }
-
-    /* Hamburger menu */
-    #menu-toggle {
-      display: none;
-    }
-    .menu-btn {
-      background: transparent;
-      border: none;
-      width: 32px;
-      height: 32px;
-      position: relative;
-      cursor: pointer;
-      display: flex;
-      flex-direction: column;
-      justify-content: space-around;
-      padding: 0;
-      z-index: 1001;
-    }
-    .menu-btn span {
-      display: block;
-      width: 100%;
-      height: 3px;
-      background: #fff;
-      border-radius: 2px;
-      transition: all 0.3s ease;
-    }
-    /* Animate hamburger to X when toggled */
-    #menu-toggle:checked + .menu-btn span:nth-child(1) {
-      transform: rotate(45deg) translate(5px, 5px);
-    }
-    #menu-toggle:checked + .menu-btn span:nth-child(2) {
-      opacity: 0;
-    }
-    #menu-toggle:checked + .menu-btn span:nth-child(3) {
-      transform: rotate(-45deg) translate(6px, -6px);
-    }
-
-    /* Nav menu */
-    nav {
-      background: #fff;
-      position: absolute;
-      top: 100%;
-      right: 1rem;
-      width: 280px;
-      max-width: 90vw;
-      border-radius: 8px;
-      box-shadow: 0 8px 15px rgba(0,0,0,0.15);
-      padding: 1rem;
-      display: none;
-      flex-direction: column;
-      gap: 1rem;
-      z-index: 1000;
-    }
-    #menu-toggle:checked ~ nav {
-      display: flex;
-    }
-    nav button, nav a {
-      background: #ff4b2b;
-      color: #fff;
-      padding: 0.75rem 1rem;
-      border-radius: 6px;
-      font-weight: 600;
-      text-align: center;
-      user-select: none;
-      transition: background-color 0.3s ease;
-    }
-    nav button:hover, nav a:hover {
-      background: #ff416c;
-    }
-
-    /* Program indicators */
-    .program-indicator {
-      position: absolute;
-      top: 100%;
-      left: 0;
-      right: 0;
-      background: #ffcc00;
-      color: #222;
-      font-weight: 700;
-      text-align: center;
-      padding: 0.4rem 0;
-      font-size: 0.9rem;
-      user-select: none;
-      z-index: 999;
-      border-bottom-left-radius: 8px;
-      border-bottom-right-radius: 8px;
-      box-shadow: 0 2px 6px rgba(0,0,0,0.1);
-    }
-    .program-indicator.special {
-      background: #ff4b2b;
-      color: #fff;
-    }
-
-    /* Main content */
-    main {
-      flex: 1;
-      max-width: 1200px;
-      margin: 1rem auto 2rem;
-      padding: 0 1rem;
-      width: 100%;
-      display: grid;
-      grid-template-columns: 1fr 300px;
-      gap: 1rem;
-    }
-
-    /* Responsive grid */
-    @media (max-width: 900px) {
-      main {
-        grid-template-columns: 1fr;
-      }
-    }
-
-    /* News section */
-    section#news {
-      background: #fff;
-      border-radius: 10px;
-      padding: 1rem 1.5rem;
-      box-shadow: 0 4px 12px rgba(0,0,0,0.05);
-      overflow-y: auto;
-    }
-    section#news h2 {
-      margin-top: 0;
-      color: #ff4b2b;
-      font-weight: 700;
-      border-bottom: 3px solid #ff4b2b;
-      padding-bottom: 0.5rem;
-    }
-    article.news-item {
-      border-bottom: 1px solid #eee;
-      padding: 0.75rem 0;
-      display: flex;
-      gap: 1rem;
-      align-items: flex-start;
-    }
-    article.news-item:last-child {
-      border-bottom: none;
-    }
-    article.news-item img {
-      width: 120px;
-      border-radius: 8px;
-      object-fit: cover;
-      flex-shrink: 0;
-      box-shadow: 0 2px 6px rgba(0,0,0,0.1);
-    }
-    article.news-item div.content {
-      flex: 1;
-    }
-    article.news-item h3 {
-      margin: 0 0 0.5rem 0;
-      font-size: 1.1rem;
-      color: #ff416c;
-    }
-    article.news-item p {
-      margin: 0 0 0.25rem;
-      line-height: 1.4;
-    }
-    article.news-item time {
-      font-size: 0.8rem;
-      color: #666;
-      user-select: none;
-    }
-
-    /* Sidebar */
-    aside {
-      display: flex;
-      flex-direction: column;
-      gap: 1rem;
-    }
-
-    /* Radio player container styled like Windows XP but modern */
-    .player-container {
-      background:
-        linear-gradient(145deg, #e0e7ff, #a3bffa);
-      border-radius: 12px;
-      box-shadow:
-        inset 3px 3px 5px #8a9fe3,
-        inset -3px -3px 5px #c8d4ff;
-      padding: 1rem;
-      display: flex;
-      flex-direction: column;
-      align-items: center;
-      gap: 0.75rem;
-    }
-
-    /* Radio logo */
-    .radio-logo {
-      width: 64px;
-      height: 64px;
-      border-radius: 8px;
-      border: 2px solid #4a69bd;
-      background: #e8f0fe;
-      box-shadow:
-        2px 2px 5px rgba(74,105,189,0.5);
-      object-fit: contain;
-    }
-
-    /* Player UI - inspired by Windows XP but colorful, modern */
-    .player-ui {
-      width: 100%;
-      max-width: 320px;
-      background: #4a69bd;
-      border-radius: 8px;
-      box-shadow:
-        3px 3px 8px #1e2b6f,
-        inset 1px 1px 0 #6c84e0;
-      padding: 0.75rem 1rem;
-      color: #edf2fc;
-      display: flex;
-      align-items: center;
-      gap: 1rem;
-      user-select: none;
-      font-weight: 700;
-      font-family: monospace;
-      font-size: 1rem;
-    }
-    .player-ui button {
-      background: #a3bffa;
-      color: #364f9f;
-      font-weight: 700;
-      padding: 0.3rem 0.6rem;
-      border-radius: 4px;
-      box-shadow:
-        1px 1px 3px #2e3d7a;
-      transition: background-color 0.3s ease;
-      flex-shrink: 0;
-    }
-    .player-ui button:hover, .player-ui button:focus {
-      background: #ff4b2b;
-      color: #fff;
-      outline: none;
-      box-shadow:
-        0 0 10px #ff4b2b;
-    }
-    .player-ui .progress-bar {
-      flex: 1;
-      height: 8px;
-      background: #6c84e0;
-      border-radius: 4px;
-      overflow: hidden;
-      cursor: pointer;
-      position: relative;
-    }
-    .player-ui .progress-bar .progress {
-      background: #ff416c;
-      height: 100%;
-      width: 0%;
-      transition: width 0.2s ease;
-    }
-
-    /* Donate button below player */
-    .donate-btn {
-      margin-top: 0.5rem;
-      background: #ff4b2b;
-      color: #fff;
-      padding: 0.5rem 1rem;
-      font-weight: 700;
-      border-radius: 24px;
-      display: inline-flex;
-      align-items: center;
-      gap: 0.5rem;
-      box-shadow: 0 4px 12px rgba(255,75,43,0.6);
-      user-select: none;
-      transition: background-color 0.3s ease;
-      text-decoration: none;
-    }
-    .donate-btn:hover, .donate-btn:focus {
-      background: #ff416c;
-      outline: none;
-      box-shadow: 0 6px 18px rgba(255,65,108,0.8);
-    }
-    .donate-btn svg {
-      width: 20px;
-      height: 20px;
-      fill: #fff;
-    }
-
-    /* Bottom buttons container */
-    .bottom-buttons {
-      margin: 1rem 0 0;
+      font-family: 'Pacifico', cursive;
+      font-size: 2.5rem;
       display: flex;
       justify-content: center;
-      gap: 1rem;
+      align-items: center;
+      animation: colorChange 3s infinite alternate;
+      z-index: 9999;
+      text-align: center;
+      padding: 20px;
+    }
+
+    @keyframes colorChange {
+      0% { color: yellow; }
+      50% { color: blue; }
+      100% { color: red; }
+    }
+
+    /* --- Reset básico --- */
+    * {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+    }
+
+    body, html {
+      height: 100%;
+      font-family: 'Roboto', sans-serif;
+      background: url('https://images.unsplash.com/photo-1504384308090-c894fdcc538d?ixlib=rb-4.0.3&auto=format&fit=crop&w=1950&q=80') no-repeat center center fixed;
+      background-size: cover;
+      color: #fff;
+      display: flex;
+      flex-direction: column;
+      min-height: 100vh;
+    }
+
+    /* --- Contenedor principal --- */
+    .container {
+      flex: 1;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      padding: 1rem 1.5rem 4rem 1.5rem;
+      background: rgba(0,0,0,0.5);
+      backdrop-filter: blur(5px);
+      max-width: 900px;
+      margin: 0 auto;
+      border-radius: 12px;
+      margin-top: 80px;
+    }
+
+    /* --- Botones superior --- */
+    nav {
+      position: fixed;
+      top: 0; left: 0; right: 0;
+      background: rgba(0,0,0,0.8);
+      padding: 10px 20px;
+      display: flex;
+      justify-content: center;
+      gap: 20px;
+      z-index: 1000;
+      border-bottom: 2px solid #f39c12;
+    }
+
+    nav a, nav button {
+      background: #f39c12;
+      color: #000;
+      padding: 10px 20px;
+      border-radius: 25px;
+      text-decoration: none;
+      font-weight: 600;
+      cursor: pointer;
+      transition: background-color 0.3s ease;
+      border: none;
+      font-size: 1rem;
+      user-select: none;
+    }
+
+    nav a:hover, nav button:hover {
+      background: #d35400;
+      color: #fff;
+    }
+
+    /* --- Reproductor --- */
+    .player {
+      margin-top: 20px;
+      background: rgba(255 255 255 / 0.1);
+      border-radius: 15px;
+      padding: 20px;
+      width: 100%;
+      max-width: 600px;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      box-shadow: 0 0 15px rgba(243,156,18,0.7);
+      transition: background-color 0.4s ease;
+    }
+
+    .player-logo {
+      width: 120px;
+      height: 120px;
+      background: #fff;
+      border-radius: 50%;
+      margin-bottom: 15px;
+      overflow: hidden;
+      box-shadow: 0 0 10px #f39c12;
+      flex-shrink: 0;
+    }
+
+    .player-logo img {
+      width: 100%;
+      height: 100%;
+      object-fit: contain;
+      filter: drop-shadow(1px 1px 2px #f39c12);
+    }
+
+    .controls {
+      display: flex;
+      align-items: center;
+      gap: 15px;
+      margin-bottom: 15px;
+      width: 100%;
+      justify-content: center;
       flex-wrap: wrap;
     }
-    .bottom-buttons button {
-      background: #ff4b2b;
-      color: white;
-      padding: 0.75rem 1.5rem;
-      border-radius: 30px;
-      font-weight: 700;
-      box-shadow: 0 4px 12px rgba(255,75,43,0.6);
-      display: inline-flex;
-      align-items: center;
-      gap: 0.5rem;
+
+    .controls button {
+      background: #f39c12;
+      border: none;
+      border-radius: 50%;
+      width: 45px;
+      height: 45px;
+      font-size: 1.2rem;
+      color: #000;
+      cursor: pointer;
       transition: background-color 0.3s ease;
-    }
-    .bottom-buttons button:hover, .bottom-buttons button:focus {
-      background: #ff416c;
-      outline: none;
-      box-shadow: 0 6px 18px rgba(255,65,108,0.8);
-    }
-    .bottom-buttons button svg {
-      width: 22px;
-      height: 22px;
-      fill: #fff;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      user-select: none;
     }
 
-    /* Form container */
-    .contest-form-container {
-      background: #fff;
-      border-radius: 10px;
-      padding: 1rem 1.5rem;
-      box-shadow: 0 4px 12px rgba(0,0,0,0.05);
-      max-width: 480px;
-      margin: 0 auto 2rem;
-    }
-    .contest-form-container h3 {
-      margin-top: 0;
-      color: #ff4b2b;
-      font-weight: 700;
-      border-bottom: 3px solid #ff4b2b;
-      padding-bottom: 0.5rem;
-      user-select: none;
-    }
-    form {
-      display: flex;
-      flex-direction: column;
-      gap: 0.75rem;
-    }
-    label {
-      font-weight: 600;
-      font-size: 0.95rem;
-      user-select: none;
-    }
-    input, textarea {
-      padding: 0.5rem;
-      border-radius: 6px;
-      border: 1.5px solid #ccc;
-      font-size: 1rem;
-      transition: border-color 0.3s ease;
-      resize: vertical;
-      font-family: inherit;
-    }
-    input:focus, textarea:focus {
-      border-color: #ff4b2b;
-      outline: none;
-      box-shadow: 0 0 6px #ff4b2b66;
-    }
-    .form-buttons {
-      display: flex;
-      gap: 1rem;
-      justify-content: flex-end;
-    }
-    .form-buttons button {
-      background: #ff4b2b;
+    .controls button:hover {
+      background: #d35400;
       color: #fff;
-      padding: 0.5rem 1.25rem;
-      font-weight: 700;
-      border-radius: 6px;
-      transition: background-color 0.3s ease;
-    }
-    .form-buttons button:hover, .form-buttons button:focus {
-      background: #ff416c;
-      outline: none;
     }
 
-    /* Footer */
-    footer {
-      background: #222;
-      color: #ddd;
+    .volume-slider {
+      width: 100px;
+    }
+
+    .color-selector {
+      margin-left: 10px;
+      border-radius: 6px;
+      border: none;
+      cursor: pointer;
+      width: 40px;
+      height: 40px;
+      padding: 0;
+    }
+
+    /* --- Canvas gráfico de ondas --- */
+    #waveform {
+      width: 100%;
+      height: 60px;
+      border-radius: 8px;
+      background: rgba(0, 0, 0, 0.3);
+      box-shadow: inset 0 0 10px #f39c12;
+    }
+
+    /* --- Texto de bienvenida emisora --- */
+    .info-text {
+      margin-top: 25px;
       text-align: center;
-      padding: 1rem 0.5rem;
+      max-width: 600px;
+      font-size: 1.2rem;
+      line-height: 1.5;
+      color: #fff;
+    }
+
+    .info-text .curved {
+      font-family: 'Pacifico', cursive;
+      font-size: 1.8rem;
+      display: block;
+      margin-bottom: 10px;
+      color: #f39c12;
+      text-shadow: 0 0 10px #f39c12;
+    }
+
+    /* --- Container concursos --- */
+    .contest-container {
+      margin-top: 30px;
+      background: rgba(255 255 255 / 0.1);
+      padding: 15px 20px;
+      border-radius: 15px;
+      width: 100%;
+      max-width: 600px;
+      box-shadow: 0 0 10px rgba(192, 57, 43, 0.7);
+      color: #fff;
+      text-align: center;
+      font-weight: 600;
+      font-size: 1.1rem;
       user-select: none;
-      font-size: 0.9rem;
-      display: flex;
-      flex-direction: column;
-      gap: 0.5rem;
-      align-items: center;
     }
+
+    .contest-container.active {
+      background-color: rgba(39, 174, 96, 0.8);
+      box-shadow: 0 0 10px rgba(39, 174, 96, 0.9);
+    }
+
+    .contest-container.inactive {
+      background-color: rgba(192, 57, 43, 0.8);
+      box-shadow: 0 0 10px rgba(192, 57, 43, 0.9);
+    }
+
+    /* --- Footer --- */
+    footer {
+      background: rgba(0,0,0,0.85);
+      padding: 20px;
+      text-align: center;
+      color: #f39c12;
+      font-weight: 600;
+      position: relative;
+      z-index: 10;
+    }
+
+    /* Redes sociales footer */
     .social-icons {
+      margin-top: 10px;
       display: flex;
-      gap: 1rem;
+      justify-content: center;
+      gap: 25px;
     }
+
     .social-icons a {
-      display: inline-block;
+      color: #f39c12;
+      font-size: 1.8rem;
+      text-decoration: none;
+      transition: color 0.3s ease;
+    }
+
+    .social-icons a:hover {
+      color: #d35400;
+    }
+
+    /* Iconos con SVG */
+    svg {
+      vertical-align: middle;
+      fill: currentColor;
       width: 24px;
       height: 24px;
-      filter: brightness(0) invert(1);
-      transition: filter 0.3s ease;
-    }
-    .social-icons a:hover, .social-icons a:focus {
-      filter: brightness(0) invert(0.7) sepia(1) saturate(4) hue-rotate(320deg);
-      outline: none;
     }
 
-    /* Scrollbar for news section on desktop */
-    @media (min-width: 901px) {
-      section#news {
-        max-height: 600px;
-        overflow-y: auto;
+    /* Responsive */
+    @media (max-width: 650px) {
+      nav {
+        flex-wrap: wrap;
+        gap: 10px;
+        padding: 8px 10px;
+      }
+      .controls {
+        justify-content: center;
+      }
+      .volume-slider {
+        width: 80px;
       }
     }
-
-    /* Dark mode */
-    body.dark {
-      background: #121212;
-      color: #eee;
-    }
-    body.dark header {
-      background: linear-gradient(90deg, #3a3a3a, #222);
-      color: #ddd;
-    }
-    body.dark nav {
-      background: #222;
-      color: #eee;
-      box-shadow: 0 8px 15px rgba(255,255,255,0.1);
-    }
-    body.dark nav button, body.dark nav a {
-      background: #444;
-      color: #eee;
-    }
-    body.dark nav button:hover, body.dark nav a:hover {
-      background: #666;
-    }
-    body.dark .program-indicator {
-      background: #bb86fc;
-      color: #121212;
-    }
-    body.dark .program-indicator.special {
-      background: #3700b3;
-      color: #eee;
-    }
-    body.dark main {
-      background: #181818;
-    }
-    body.dark section#news {
-      background: #222;
-      color: #ddd;
-      border-color: #444;
-    }
-    body.dark article.news-item {
-      border-color: #444;
-    }
-    body.dark .player-container {
-      background: linear-gradient(145deg, #22252a, #3a3f4b);
-      box-shadow:
-        inset 3px 3px 5px #141821,
-        inset -3px -3px 5px #4e5573;
-    }
-    body.dark .player-ui {
-      background: #3a3f4b;
-      color: #ddd;
-      box-shadow:
-        3px 3px 8px #22262e,
-        inset 1px 1px 0 #5a6177;
-    }
-    body.dark .player-ui button {
-      background: #5a6177;
-      color: #ddd;
-      box-shadow:
-        1px 1px 3px #22262e;
-    }
-    body.dark .player-ui button:hover, body.dark .player-ui button:focus {
-      background: #bb86fc;
-      color: #121212;
-      box-shadow: 0 0 10px #bb86fc;
-    }
-    body.dark .donate-btn {
-      background: #bb86fc;
-      color: #121212;
-      box-shadow: 0 4px 12px rgba(187,134,252,0.7);
-    }
-    body.dark .donate-btn:hover, body.dark .donate-btn:focus {
-      background: #9a63cc;
-      box-shadow: 0 6px 18px rgba(154,99,204,0.8);
-    }
-    body.dark .bottom-buttons button {
-      background: #bb86fc;
-      color: #121212;
-      box-shadow: 0 4px 12px rgba(187,134,252,0.7);
-    }
-    body.dark .bottom-buttons button:hover, body.dark .bottom-buttons button:focus {
-      background: #9a63cc;
-      box-shadow: 0 6px 18px rgba(154,99,204,0.8);
-    }
-    body.dark .contest-form-container {
-      background: #222;
-      color: #ddd;
-      box-shadow: 0 4px 12px rgba(255,255,255,0.05);
-    }
-    body.dark input, body.dark textarea {
-      background: #333      ;
-      border: 1.5px solid #555;
-      color: #ddd;
-    }
-    body.dark input:focus, body.dark textarea:focus {
-      border-color: #bb86fc;
-      box-shadow: 0 0 6px #bb86fc99;
-      outline: none;
-    }
-    body.dark footer {
-      background: #121212;
-      color: #bbb;
-    }
-    body.dark .social-icons a {
-      filter: brightness(0) invert(0.8);
-    }
-    body.dark .social-icons a:hover, body.dark .social-icons a:focus {
-      filter: brightness(0) invert(0.6) sepia(1) saturate(4) hue-rotate(260deg);
-    }
-
-    /* Accessibility focus */
-    button:focus-visible, a:focus-visible, input:focus-visible, textarea:focus-visible {
-      outline: 3px solid #ff4b2b;
-      outline-offset: 2px;
+    
+    
+    
+    
+    
+    /* Estilos para el mensaje de advertencia */
+    #warning-message {
+      display: none;
+      position: fixed;
+      top: 0; left: 0; right: 0;
+      background-color: #ffcc00;
+      color: #000;
+      font-weight: bold;
+      padding: 1em;
+      text-align: center;
+      z-index: 9999;
+      font-family: Arial, sans-serif;
     }
   </style>
 </head>
-<body class="">
-  <!-- Header with logo, menu and program indicator -->
-  <header>
-    <div class="logo-container" aria-label="Logo de Vive FM Online">
-      <!-- Placeholder logo: replace src with your logo path -->
-      <img src="img/a-vive.jpg" alt="Logo de Vive FM Online" class="radio-logo">
-      <span class="logo-text">Vive FM Online</span>
-    </div>
+<body>
 
-    <!-- Program Indicator (hidden by default, displayed dynamically) -->
-    <div id="program-indicator" class="program-indicator" role="status" aria-live="polite" style="display:none;">
-      <!-- Dynamic program info will appear here -->
-    </div>
+ <div id="warning-message" role="alert" aria-live="assertive">
+    Atención: esta páginas intenta proteger su código fuente.
+  
+  <h1>Disculpa está acción está bloqueada</h1>
+  <p></p>
+</div>
 
-    <!-- Hamburger Menu -->
-    <input type="checkbox" id="menu-toggle" aria-label="Abrir menú de navegación">
-    <label for="menu-toggle" class="menu-btn" aria-haspopup="true" aria-expanded="false" aria-controls="menu">
-      <span></span>
-      <span></span>
-      <span></span>
-    </label>
+  <!-- Navegación superior -->
+  <nav>
+    <a href=" https://chat.whatsapp.com/JLIjsB9t6VG70JwjL5A0ai" target="_blank" rel="noopener" aria-label="Grupo WhatsApp">WhatsApp</a>
+    
+    <button id="btnPublicidad" aria-label="Publicidad" onclick="window.location.href='publicidad.html'">Publicidad</button>
+    
+    
+    <button id="btnRedes" aria-label="Redes Sociales">Redes sociales</button>
+  </nav>
 
-    <nav id="menu" aria-label="Menú principal">
-      <button id="darkModeToggle" type="button" aria-pressed="false">Modo Oscuro</button>
-      <a href="https://chat.whatsapp.com/JLIjsB9t6VG70JwjL5A0ai?mode=gi_t" target="_blank" rel="noopener" aria-label="Enviar mensaje por WhatsApp a la emisora">Enviar mensaje WhatsApp</a>
-      <a href="https://gabriel2000-spec.github.io/VIVE-FM-ONLINE/#ayuda" role="button" id="helpBtn">Ayuda</a>
-      <button id="statsBtn" type="button">Estadísticas de la emisora</button>
-      <button id="shareBtn" type="button">Compartir enlace</button>
-      <div id="streamingUsers" aria-live="polite" style="margin-top: 0.5rem; font-weight: 600; font-size: 0.85rem;">
-        Usuarios conectados: 217
+  <main class="container" role="main">
+    <!-- Reproductor -->
+    <section class="player" id="player">
+      <div class="player-logo" aria-label="Logo de la emisora">
+        <img src="img/logo.jpg" alt="Logo VIVE FM" />
       </div>
-    </nav>
-  </header>
-<p>
-   <!-- Sidebar with radio player and donation button -->
-    </p><aside>
-      <section aria-label="Reproductor de radio Vive FM Online">
-        <div class="player-container" role="region" aria-live="polite" aria-label="Reproductor de radio">
-          <img src="img/a-vive.jpg" alt="Logo de la emisora Vive FM Online" class="radio-logo">
-          <div class="player-ui">
-            <button id="playPauseBtn" aria-label="Pausar radio" title="Reproducir">⏸️</button>
-            <div class="progress-bar" id="progressBar" aria-label="Barra de progreso del streaming" tabindex="0" role="slider" aria-valuemin="0" aria-valuemax="100" aria-valuenow="0">
-              <div class="progress"></div>
-            </div>
-            <span id="statusText" aria-live="polite" aria-atomic="true" style="min-width: 60px; text-align:center;">En directo</span>
-          </div>
-        </div>
-     
-     
-  <center>   
-     
-        <a href="https://chat.whatsapp.com/JLIjsB9t6VG70JwjL5A0ai?mode=gi_t" target="_blank" rel="noopener" class="donate-btn" aria-label="Donar a la emisora vía WhatsApp">
-          <svg aria-hidden="true" viewBox="0 0 24 24" fill="currentColor" focusable="false">
-            <path d="M12 21.35l-1.45-1.32C5.4 15.36 2 12.28 2 8.5 2 5.42 4.42 3 7.5 3c1.74 0 3.41 0.81 4.5 2.09C13.09 3.81 14.76 3 16.5 3 19.58 3 22 5.42 22 8.5c0 3.78-3.4 6.86-8.55 11.54L12 21.35z"></path>
-          </svg>
-          Donar
-        </a>
-      </center></section>
-    </aside>
-  
 
-  <!-- Bottom buttons -->
-  <div class="bottom-buttons" role="region" aria-label="Acciones para donar y participar">
-    <button id="donateStreamingBtn" aria-label="Donar al streaming vía WhatsApp">
-      <svg aria-hidden="true" viewBox="0 0 24 24" fill="currentColor" focusable="false">
-        <path d="M12 21.35l-1.45-1.32C5.4 15.36 2 12.28 2 8.5 2 5.42 4.42 3 7.5 3c1.74 0 3.41 0.81 4.5 2.09C13.09 3.81 14.76 3 16.5 3 19.58 3 22 5.42 22 8.5c0 3.78-3.4 6.86-8.55 11.54L12 21.35z"></path>
-      </svg>
-      Donar al Streaming
-    </button>
-    <button id="participateBtn" aria-label="Participar en programas de la radio vía WhatsApp">
-      <svg aria-hidden="true" viewBox="0 0 24 24" fill="currentColor" focusable="false">
-        <path d="M12 12c2.21 0 4-1.79 4-4s-1.79-4-4-4-4 1.79-4 4 1.79 4 4 4zm0 2c-2.67 0-8 1.34-8 4v2h16v-2c0-2.66-5.33-4-8-4z"></path>
-      </svg>
-      Participar en Programas
-    </button>
-  </div>
-  
+      <audio id="audioPlayer" crossorigin="anonymous" preload="auto">
+        <!-- Ejemplo de URL streaming. Cambiar por la URL real -->
+        <source src=" https://stream.zeno.fm/ctv5k5brgpfvv" type="audio/mpeg" />
+        Tu navegador no soporta audio HTML5.
+      </audio>
 
+      <div class="controls" role="group" aria-label="Controles del reproductor">
+        <button id="btnPlay" aria-label="Reproducir">&#9658;</button>
+        <button id="btnPause" aria-label="Pausar" disabled>&#10074;&#10074;</button>
+        <input type="range" id="volumeControl" class="volume-slider" min="0" max="1" step="0.01" aria-label="Control de volumen" value="1" />
+        <input type="color" id="colorPicker" class="color-selector" aria-label="Selector de color del reproductor" title="Cambiar color del reproductor" value="#f39c12" />
+      </div>
 
-
-  <main>
-    <!-- News Section -->
-    <section id="news" aria-label="Noticias nacionales, internacionales y regionales">
-      <h2>Publicación</h2>
-      <!-- Sample news items -->
-      <article class="news-item" tabindex="0">
-        <img src="img/a-vive.jpg">
-        <div class="content">
-          <h3>Introducción: Emisora online vive fm</h3>
-          <p> </p><li>Bienvenidos a Vive FM, tu emisora de radio online que siempre está contigo. Desde 2019, hemos trabajado con mucha dedicación para ofrecerles una programación variada y de calidad, creada especialmente para nuestra querida audiencia. 
-<p></p>
-          <time datetime="2025-06-10T08:30">16 octubre 2025</time>
-        </li></div>
-      </article>
-      <article class="news-item" tabindex="0">
-        <img src="img/bproyecto.jpeg" alt="Imagen noticia internacional">
-        <div class="content">
-          <h3>Orquesta: Proyecto Elian</h3>
-          <p></p><li>¡Orquesta Proyecto Elian está listo para animar tus eventos! Disponible para bodas, eventos cristianos y presentaciones en vivo. Contáctanos para llevar música de calidad a tu celebración..<p></p>
-          <time datetime="2024-06-09T17:00">9 septiembre 2025</time>
-        </li></div>
-      </article>
-      <article class="news-item" tabindex="0">
-        <img src="img/cgiro.jpeg" alt="Imagen noticia regional">
-        <div class="content">
-          <h3>Periódico Giro: El círculo de la información veraz por el periodista Israel Basanta</h3>
-          <p></p><li>Giro el círculo de la información veraz. Noticias regionales, nacionales e internacionales para mantenerte siempre bien informado. ¡Sintoniza con la verdad!.<p></p>
-          <time datetime="2024-06-08T12:00">18 diciembre 2025</time>
-        </li></div>
-      </article>
+      <canvas id="waveform" aria-label="Visualización gráfica de ondas"></canvas>
     </section>
 
- 
- 
- 
-  <!-- Contest form -->
-  <section class="contest-form-container" aria-labelledby="contestTitle">
-    <h3 id="contestTitle">Formulario Concurso Vive FM</h3>
-    <form id="contestForm" novalidate="">
-      <label for="nameInput">Nombre completo</label>
-      <input type="text" id="nameInput" name="name" required="" aria-required="true" placeholder="Tu nombre" autocomplete="name">
+    <!-- Texto informativo -->
+    <section class="info-text" aria-live="polite">
+      <span class="curved">Bienvenidos a vive fm Siempre contigo</span>
+      Ciudad Bolívar Venezuela, Está emisora está diseñada para transmitir palabras de Dios y entretener las 24 horas full música cristiana.
+    </section>
 
-      <label for="phoneInput">Número de teléfono (WhatsApp)</label>
-      <input type="tel" id="phoneInput" name="phone" required="" aria-required="true" placeholder="+58 123456789" pattern="^\+?\d{7,15}$" autocomplete="tel">
-
-      <label for="messageInput">Mensaje / Comentario</label>
-      <textarea id="messageInput" name="message" rows="3" placeholder="Escribe tu mensaje para el concurso"></textarea>
-
-      <div class="form-buttons">
-        <button type="submit" aria-label="Enviar formulario de concurso">Enviar</button>
-        <button type="reset" aria-label="Resetear formulario de concurso">Resetear</button>
-      </div>
-    </form>
-  </section>
+    <!-- Container concursos -->
+    <section class="contest-container inactive" id="contestContainer" aria-live="polite" aria-atomic="true">
+      En estos momentos no tenemos concurso en la emisora le estaremos avisando
+    </section>
+  </main>
 
   <!-- Footer -->
   <footer>
-    <div>© 2024 Vive FM Online - Siempre Contigo</div>
-    <div class="social-icons" role="list" aria-label="Redes sociales de Vive FM Online">
-      <a href="https://facebook.com/vivefmonline" target="_blank" rel="noopener" aria-label="Facebook Vive FM Online" role="listitem">
-        <svg viewBox="0 0 24 24" fill="currentColor" aria-hidden="true" focusable="false" width="24" height="24">
-          <path d="M22 12c0-5.52-4.48-10-10-10S2 6.48 2 12c0 5 3.66 9.13 8.44 9.88v-6.99H7.9v-2.89h2.54V9.83c0-2.5 1.49-3.89 3.77-3.89 1.09 0 2.23.2 2.23.2v2.46h-1.25c-1.23 0-1.62.77-1.62 1.56v1.87h2.77l-.44 2.89h-2.33v6.99C18.34 21.13 22 17 22 12z"></path>
-        </svg>
+    © VIVE FM - SIEMPRE CONTIGO
+    <div class="social-icons" aria-label="Redes sociales">
+      <a href=" https://facebook.com/groups/1390124162882958/" target="_blank" rel="noopener" aria-label="Facebook">
+        <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M22 12a10 10 0 1 0-11.5 9.9v-7h-2v-3h2v-2c0-2 1-3 3-3h2v3h-2c-.5 0-1 .5-1 1v2h3l-1 3h-2v7A10 10 0 0 0 22 12"/></svg>
       </a>
-      <a href="https://wa.me/1234567890" target="_blank" rel="noopener" aria-label="WhatsApp Vive FM Online" role="listitem">
-        <svg viewBox="0 0 24 24" fill="currentColor" aria-hidden="true" focusable="false" width="24" height="24">
-          <path d="M20.52 3.48A11.94 11.94 0 0012 0C5.37 0 .03 5.36 0 12A11.95 11.95 0 007.31 21.07l-1.94 7.11 7.31-1.93A11.94 11.94 0 0024 12c0-3.2-1.26-6.22-3.48-8.52zM12 19.9a7.92 7.92 0 01-4.57-1.43l-.33-.22-2.72.72.72-2.65-.22-.33a7.92 7.92 0 011.43-4.57 7.91 7.91 0 0113.57 0 7.91 7.91 0 01-1.43 9.36 7.92 7.92 0 01-4.57 1.42zm3.58-6.14l-1.07 1.07a.67.67 0 01-.95 0l-1.2-1.2a.67.67 0 010-.95l1.07-1.07a.67.67 0 01.95 0l1.2 1.2a.67.67 0 010 .95z"></path>
-        </svg>
+      <a href=" https://www.tiktok.com/@alkngel8?_r=1&_t=ZS-974ztfEZ10R" target="_blank" rel="noopener" aria-label="TikTok">
+        <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M9 3v12a4 4 0 1 0 4-4h3V3h-3a7 7 0 1 1-4 7"/></svg>
       </a>
-      <a href="https://instagram.com/vivefmonline" target="_blank" rel="noopener" aria-label="Instagram Vive FM Online" role="listitem">
-        <svg viewBox="0 0 24 24" fill="currentColor" aria-hidden="true" focusable="false" width="24" height="24">
-          <path d="M7 2C4.24 2 2 4.24 2 7v10c0 2.76 2.24 5 5 5h10c2.76 0 5-2.24 5-5V7c0-2.76-2.24-5-5-5H7zm10 2a3 3 0 013 3v10a3 3 0 01-3 3H7a3 3 0 01-3-3V7a3 3 0 013-3h10zm-5 3a5 5 0 100 10 5 5 0 000-10zm0 2a3 3 0 010 6 3 3 0 010-6zm4.5-.5a1 1 0 100 2 1 1 0 000-2z"></path>
-        </svg>
+      <a href="https://chat.whatsapp.com/JLIjsB9t6VG70JwjL5A0ai " target="_blank" rel="noopener" aria-label="WhatsApp">
+        <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.472-.148-.67.15-.198.297-.767.967-.94 1.165-.173.198-.347.223-.644.075-.297-.149-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.372-.025-.52-.075-.148-.67-1.611-.916-2.206-.242-.579-.487-.5-.67-.51l-.57-.01c-.198 0-.52.074-.792.372s-1.04 1.016-1.04 2.479 1.065 2.876 1.213 3.074c.149.198 2.095 3.2 5.076 4.487.709.306 1.262.489 1.694.625.712.226 1.36.194 1.872.118.571-.085 1.758-.719 2.006-1.413.248-.695.248-1.29.173-1.413-.074-.123-.272-.198-.57-.347z"/></svg>
       </a>
-      <a href="https://tiktok.com/@vivefmonline" target="_blank" rel="noopener" aria-label="TikTok Vive FM Online" role="listitem">
-        <svg viewBox="0 0 24 24" fill="currentColor" aria-hidden="true" focusable="false" width="24" height="24">
-          <path d="M9 3h3.5a4.5 4.5 0 004.5 4.5v3a7.5 7.5 0 01-7.5-7.5zm7.5 10.5a7.5 7.5 0 11-7.5-7.5v3a4.5 4.5 0 004.5 4.5h3v-3z"></path>
-        </svg>
+      <a href="https://www.instagram.com/vive_fm3988?igsh=MTR6cGdlNGgwM2g5OQ== " target="_blank" rel="noopener" aria-label="Instagram">
+        <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M7 2C4.243 2 2 4.243 2 7v10c0 2.757 2.243 5 5 5h10c2.757 0 5-2.243 5-5V7c0-2.757-2.243-5-5-5H7zm10 2a3 3 0 1 1-6 0 3 3 0 0 1 6 0zm-5 3a5 5 0 1 0 0 10 5 5 0 0 0 0-10z"/></svg>
       </a>
     </div>
   </footer>
 
   <script>
-    // JavaScript code for interactivity and storage
+    // Esperar que DOM cargue
+    document.addEventListener('DOMContentLoaded', () => {
+      const welcomeScreen = document.getElementById('welcome-screen');
+      const audio = document.getElementById('audioPlayer');
+      const btnPlay = document.getElementById('btnPlay');
+      const btnPause = document.getElementById('btnPause');
+      const volumeControl = document.getElementById('volumeControl');
+      const colorPicker = document.getElementById('colorPicker');
+      const player = document.getElementById('player');
+      const canvas = document.getElementById('waveform');
+      const contestContainer = document.getElementById('contestContainer');
+      const btnPublicidad = document.getElementById('btnPublicidad');
+      const btnRedes = document.getElementById('btnRedes');
 
-    (() => {
-      // Constants for streaming URL and WhatsApp group link
-      const STREAMING_URL = "https://stream.zeno.fm/ctv5k5brgpfvv"; // Replace with your streaming URL
-      const WHATSAPP_GROUP_LINK = "https://chat.whatsapp.com/JLIjsB9t6VG70JwjL5A0ai?mode=gi_t"; // Replace with your WhatsApp group link
-      const WHATSAPP_CONTACT_LINK = "https://chat.whatsapp.com/JLIjsB9t6VG70JwjL5A0ai?mode=gi_t"; // Replace with your contact phone
+      // Mostrar bienvenida 3 segundos y ocultar
+      setTimeout(() => {
+        welcomeScreen.style.opacity = '0';
+        setTimeout(() => welcomeScreen.style.display = 'none', 800);
+      }, 3000);
 
-      // Elements
-      const playPauseBtn = document.getElementById("playPauseBtn");
-      const progressBar = document.getElementById("progressBar");
-      const progress = progressBar.querySelector(".progress");
-      const statusText = document.getElementById("statusText");
-      const donateBtn = document.querySelector(".donate-btn");
-      const donateStreamingBtn = document.getElementById("donateStreamingBtn");
-      const participateBtn = document.getElementById("participateBtn");
-      const darkModeToggle = document.getElementById("darkModeToggle");
-      const menuToggle = document.getElementById("menu-toggle");
-      const programIndicator = document.getElementById("program-indicator");
-      const streamingUsersDiv = document.getElementById("streamingUsers");
-      const contestForm = document.getElementById("contestForm");
-      const helpBtn = document.getElementById("helpBtn");
-      const statsBtn = document.getElementById("statsBtn");
-      const shareBtn = document.getElementById("shareBtn");
-
-      // Audio object for streaming
-      let audio = new Audio(STREAMING_URL);
-      audio.preload = "none";
-      audio.crossOrigin = "anonymous";
-      audio.volume = 0.7;
-
-      let isPlaying = false;
-
-      // Play/pause toggle
-      function togglePlay() {
-        if (isPlaying) {
-          audio.pause();
-        } else {
-          audio.play().catch(e => {
-            alert("No se puede reproducir el streaming. Por favor, revisa tu conexión.");
-            console.error("Error al reproducir:", e);
-          });
-        }
-      }
-
-      playPauseBtn.addEventListener("click", () => {
-        togglePlay();
-      });
-
-      audio.addEventListener("play", () => {
-        isPlaying = true;
-        playPauseBtn.textContent = "⏸️";
-        playPauseBtn.setAttribute("aria-label", "Pausar radio");
-        statusText.textContent = "En directo";
-      });
-
-      audio.addEventListener("pause", () => {
-        isPlaying = false;
-        playPauseBtn.textContent = "▶️";
-        playPauseBtn.setAttribute("aria-label", "Reproducir radio");
-        statusText.textContent = "Detenido";
-        progress.style.width = "0%";
-        progressBar.setAttribute("aria-valuenow", "0");
-      });
-
-      // Streaming progress simulation (since streaming audio doesn't have duration)
-           // We'll simulate progress bar moving while playing.
-      let progressValue = 0;
-
-      function startProgress() {
-        if (progressInterval) return; // prevent multiple intervals
-        progressValue = 0;
-        progress.style.width = "0%";
-        progressBar.setAttribute("aria-valuenow", progressValue);
-
-        progressInterval = setInterval(() => {
-          progressValue += 1;
-          if (progressValue > 100) progressValue = 0;
-          progress.style.width = progressValue + "%";
-          progressBar.setAttribute("aria-valuenow", progressValue);
-        }, 200); // progress updates every 200ms (~20 seconds for full bar)
-      }
-
-      function stopProgress() {
-        clearInterval(progressInterval);
-        progressInterval = null;
-        progressValue = 0;
-        progress.style.width = "0%";
-        progressBar.setAttribute("aria-valuenow", "0");
-      }
-
-      audio.addEventListener("play", startProgress);
-      audio.addEventListener("pause", stopProgress);
-      audio.addEventListener("ended", stopProgress);
-      audio.addEventListener("error", () => {
-        alert("Error en el streaming. Intenta recargar la página.");
-        stopProgress();
-        audio.pause();
-      });
-
-      // Dark mode toggle
-      function setDarkMode(enabled) {
-        if (enabled) {
-          document.body.classList.add("dark");
-          darkModeToggle.textContent = "Modo Claro";
-          darkModeToggle.setAttribute("aria-pressed", "true");
-          localStorage.setItem("darkMode", "true");
-        } else {
-          document.body.classList.remove("dark");
-          darkModeToggle.textContent = "Modo Oscuro";
-          darkModeToggle.setAttribute("aria-pressed", "false");
-          localStorage.setItem("darkMode", "false");
-        }
-      }
-
-      // Load dark mode preference
-      const savedDarkMode = localStorage.getItem("darkMode");
-      if (savedDarkMode === "true") {
-        setDarkMode(true);
-      } else {
-        setDarkMode(false);
-      }
-
-      darkModeToggle.addEventListener("click", () => {
-        const isDark = document.body.classList.contains("dark");
-        setDarkMode(!isDark);
-      });
-
-      // Donate buttons open WhatsApp chat
-      donateBtn.addEventListener("click", () => {
-        window.open(WHATSAPP_CONTACT_LINK, "_blank", "noopener");
-      });
-      donateStreamingBtn.addEventListener("click", () => {
-        window.open(WHATSAPP_CONTACT_LINK, "_blank", "noopener");
-      });
-
-      // Participate button opens WhatsApp group link
-      participateBtn.addEventListener("click", () => {
-        window.open(WHATSAPP_GROUP_LINK, "_blank", "noopener");
-      });
-
-      // Help button shows alert with info (can be enhanced)
-      helpBtn.addEventListener("click", (e) => {
-        e.preventDefault();
-        alert("Para enviar mensajes o participar, utiliza los botones correspondientes o escribe a nuestro WhatsApp.");
-      });
-
-      // Stats button example alert (replace with real stats or modal)
-      statsBtn.addEventListener("click", () => {
-        alert("Actualmente hay " + streamingUsersDiv.textContent.split(": ")[1] + " usuarios conectados.");
-      });
-
-      // Share button uses Web Share API if available
-      shareBtn.addEventListener("click", async () => {
-        const shareData = {
-          title: "Vive FM Online",
-          text: "Escucha Vive FM Online - Siempre Contigo",
-          url: window.location.href
-        };
-        if (navigator.share) {
-          try {
-            await navigator.share(shareData);
-          } catch (err) {
-            alert("No se pudo compartir: " + err);
-          }
-        } else {
-          // fallback: copy URL to clipboard
-          try {
-            await navigator.clipboard.writeText(window.location.href);
-            alert("Enlace copiado al portapapeles.");
-          } catch {
-            alert("No se pudo copiar el enlace. Por favor, copia manualmente: " + window.location.href);
-          }
-        }
-      });
-
-      // Contest form validation and submission
-      contestForm.addEventListener("submit", (e) => {
-        e.preventDefault();
-
-        // Simple validation
-        const name = contestForm.name.value.trim();
-        const phone = contestForm.phone.value.trim();
-        const message = contestForm.message.value.trim();
-
-        const phonePattern = /^\+?\d{7,15}$/;
-
-        if (!name) {
-          alert("Por favor, ingresa tu nombre completo.");
-          contestForm.name.focus();
-          return;
-        }
-        if (!phonePattern.test(phone)) {
-          alert("Por favor, ingresa un número de teléfono válido con código de país.");
-          contestForm.phone.focus();
-          return;
-        }
-
-        // Save to localStorage
-        const submission = {
-          name,
-          phone,
-          message,
-          date: new Date().toISOString()
-        };
-
-        let submissions = JSON.parse(localStorage.getItem("contestSubmissions")) || [];
-        submissions.push(submission);
-        localStorage.setItem("contestSubmissions", JSON.stringify(submissions));
-
-        alert("Gracias por participar en el concurso. ¡Buena suerte!");
-
-        contestForm.reset();
-      });
-
-      // Contest form reset button confirmation
-      contestForm.addEventListener("reset", (e) => {
-        if (!confirm("¿Estás seguro que deseas resetear el formulario?")) {
-          e.preventDefault();
-        }
-      });
-
-      // Program indicator example (dynamic update)
-      function updateProgramIndicator() {
-        // Example schedule (static)
-        const programs = [
-          {start: "06:00", end: "09:00", name: "Buenos Días Vive FM"},
-          {stop: "09:00", end: "12:00", name: "Música y Noticias"},
-          {stop: "12:00", end: "15:00", name: "Tardes con Vive FM"},
-          {stop: "15:00", end: "18:00", name: "Programas Especiales"},
-          {stop: "18:00", end: "21:00", name: "Noche de Música"},
-          {stop: "0:00", end: "0:00", name: "Vive FM Nocturno"}
-        ];
-
-        const now = new Date();
-        const nowTime = now.getHours() * 60 + now.getMinutes();
-
-        const currentProgram = programs.find(p => {
-          let [startH, startM] = p.start.split(":").map(Number);
-          let [endH, endM] = p.end.split(":").map(Number);
-          let start = startH * 60 + startM;
-          let end = endH * 60 + endM;
-
-          if (end <= start) {
-            // crosses midnight
-            return nowTime >= start || nowTime < end;
-          }
-          return nowTime >= start && nowTime < end;
+      // Auto reproducir (con manejo de promesas para evitar error navegador)
+      function tryPlay() {
+        audio.play().catch(e => {
+          console.warn('Autoplay falló, esperando interacción del usuario');
         });
+      }
+      tryPlay();
 
-        if (currentProgram) {
-          programIndicator.style.display = "block";
-          programIndicator.textContent = `Programa actual: ${currentProgram.name}`;
+      // Botones play/pausa
+      btnPlay.addEventListener('click', () => {
+        audio.play();
+        btnPlay.disabled = true;
+        btnPause.disabled = false;
+      });
+
+      btnPause.addEventListener('click', () => {
+        audio.pause();
+        btnPlay.disabled = false;
+        btnPause.disabled = true;
+      });
+
+      // Actualizar botones al cambiar estado manualmente
+      audio.addEventListener('play', () => {
+        btnPlay.disabled = true;
+        btnPause.disabled = false;
+      });
+
+      audio.addEventListener('pause', () => {
+        btnPlay.disabled = false;
+        btnPause.disabled = true;
+      });
+
+      // Control volumen
+      volumeControl.addEventListener('input', () => {
+        audio.volume = volumeControl.value;
+      });
+
+      // Cambiar color del reproductor
+      colorPicker.addEventListener('input', (e) => {
+        player.style.backgroundColor = hexToRGBA(e.target.value, 0.15);
+        player.style.boxShadow = `0 0 15px ${e.target.value}`;
+      });
+
+      // Función helper para convertir hex a rgba con alpha
+      function hexToRGBA(hex, alpha) {
+        let r = 0, g = 0, b = 0;
+        if (hex.length === 4) {
+          r = parseInt(hex[1] + hex[1], 16);
+          g = parseInt(hex[2] + hex[2], 16);
+          b = parseInt(hex[3] + hex[3], 16);
+        } else if (hex.length === 7) {
+          r = parseInt(hex[1] + hex[2], 16);
+          g = parseInt(hex[3] + hex[4], 16);
+          b = parseInt(hex[5] + hex[6], 16);
+        }
+        return `rgba(${r},${g},${b},${alpha})`;
+      }
+
+      // Visualización gráfica de ondas con Web Audio API
+      const audioContext = new (window.AudioContext || window.webkitAudioContext)();
+      const analyser = audioContext.createAnalyser();
+      analyser.fftSize = 256;
+      const source = audioContext.createMediaElementSource(audio);
+      source.connect(analyser);
+      analyser.connect(audioContext.destination);
+
+      const canvasCtx = canvas.getContext('2d');
+      const WIDTH = canvas.width = canvas.offsetWidth;
+      const HEIGHT = canvas.height = canvas.offsetHeight;
+      const bufferLength = analyser.frequencyBinCount;
+      const dataArray = new Uint8Array(bufferLength);
+
+      function draw() {
+        requestAnimationFrame(draw);
+
+        analyser.getByteTimeDomainData(dataArray);
+
+        canvasCtx.fillStyle = 'rgba(0, 0, 0, 0.15)';
+        canvasCtx.fillRect(0, 0, WIDTH, HEIGHT);
+
+        canvasCtx.lineWidth = 2;
+        canvasCtx.strokeStyle = colorPicker.value || '#f39c12';
+        canvasCtx.beginPath();
+
+        const sliceWidth = WIDTH / bufferLength;
+        let x = 0;
+
+        for(let i = 0; i < bufferLength; i++) {
+          const v = dataArray[i] / 128.0;
+          const y = v * HEIGHT / 2;
+
+          if(i === 0) {
+            canvasCtx.moveTo(x, y);
+          } else {
+            canvasCtx.lineTo(x, y);
+          }
+
+          x += sliceWidth;
+        }
+
+        canvasCtx.lineTo(WIDTH, HEIGHT/2);
+        canvasCtx.stroke();
+      }
+
+      draw();
+
+      // Manejar interacción botones publicidad y redes sociales: alerta o ventana modal simple
+      btnPublicidad.addEventListener('none', () => {
+        alert(' Confirmar para entrar a la página de publicidad.');
+      });
+
+      btnRedes.addEventListener('click', () => {
+        alert('Página de Redes Sociales en construcción. Visita nuestras redes en el pie de página.');
+      });
+
+      // Simulación estado concurso (puedes cambiar a true para activo)
+      let concursoActivo = false;
+
+      function actualizarEstadoConcurso() {
+        if (concursoActivo) {
+          contestContainer.classList.remove('inactive');
+          contestContainer.classList.add('active');
+          contestContainer.textContent = '¡Concurso activo! Participa ahora y gana increíbles premios.';
         } else {
-          programIndicator.style.display = "none";
-          programIndicator.textContent = "";
+          contestContainer.classList.remove('active');
+          contestContainer.classList.add('inactive');
+          contestContainer.textContent = 'En estos momentos no tenemos concurso en la emisora le estaremos avisando';
         }
       }
 
-      updateProgramIndicator();
-      setInterval(updateProgramIndicator, 60000); // update every minute
+      actualizarEstadoConcurso();
 
-      // Streaming users count simulation (replace with real API if available)
-      function updateStreamingUsers() {
-        // Simulate between 50 and 200 users
-        const users = Math.floor(Math.random() * 150) + 50;
-        streamingUsersDiv.textContent = `Usuarios conectados: ${users}`;
+      // Reanudar audioContext en interacción (por políticas de autoplay)
+      function resumeAudioContext() {
+        if (audioContext.state === 'suspended') {
+          audioContext.resume();
+        }
       }
 
-      updateStreamingUsers();
-      setInterval(updateStreamingUsers, 15000); // update every 15 seconds
-
-      // Accessibility: Update aria-expanded on menu toggle
-      menuToggle.addEventListener("change", () => {
-        const expanded = menuToggle.checked;
-        document.querySelector(".menu-btn").setAttribute("aria-expanded", expanded.toString());
+      ['click', 'touchstart'].forEach(evt => {
+        document.body.addEventListener(evt, resumeAudioContext, { once: true });
       });
-
-      // Keyboard navigation for progress bar (slider)
-      progressBar.addEventListener("keydown", (e) => {
-        if (!isPlaying) return; // no interaction if not playing
-        if (e.key === "ArrowRight" || e.key === "ArrowUp") {
-          e.preventDefault();
-          progressValue = Math.min(100, progressValue + 5);
-          progress.style.width = progressValue + "%";
-          progressBar.setAttribute("aria-valuenow", progressValue);
-        } else if (e.key === "ArrowLeft" || e.key === "ArrowDown") {
-          e.preventDefault();
-          progressValue = Math.max(0, progressValue - 5);
-          progress.style.width = progressValue + "%";
-          progressBar.setAttribute("aria-valuenow", progressValue);
-        }
-      });
-
-    })();
-    </script>
+    });
     
     
-</main></body></html>
+    
+    
+     // Función para mostrar el mensaje de advertencia
+    function showWarning() {
+      const warning = document.getElementById('warning-message');
+      warning.style.display = 'block';
+      // Oculta el mensaje después de 3 segundos
+      setTimeout(() => {
+        warning.style.display = 'none';
+      }, 3000);
+    }
+
+    // Deshabilitar clic derecho (abrir menú contextual)
+    window.addEventListener('contextmenu', function(event) {
+      event.preventDefault();
+      showWarning();
+    });
+
+    // Detectar teclas que abren herramientas de desarrollo
+    window.addEventListener('keydown', function(event) {
+      // F12
+      if (event.key === 'F12') {
+        event.preventDefault();
+        showWarning();
+      }
+      // Ctrl+Shift+I, Ctrl+Shift+J, Ctrl+U
+      if (
+        (event.ctrlKey && event.shiftKey && (event.key === 'I' || event.key === 'J')) ||
+        (event.ctrlKey && event.key === 'U')
+      ) {
+        event.preventDefault();
+        showWarning();
+      }
+    });
+  </script>
+  </body>
+  </html>
