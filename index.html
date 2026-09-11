@@ -1,617 +1,819 @@
-
 <!DOCTYPE html>
 <html lang="es">
 <head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1" />
-  <title>VIVE FM - Venezuela</title>
-  <link href="https://fonts.googleapis.com/css2?family=Pacifico&family=Roboto&display=swap" rel="stylesheet" />
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>VIVE FM ONLINE - SIEMPRE CONTIGO</title>
   <style>
-    /* --- estilos de bienvenida --- */
-    #welcome-screen {
-      position: fixed;
-      top: 0; left: 0; right: 0; bottom: 0;
-      background: #000;
-      color: #fff;
-      font-family: 'Pacifico', cursive;
-      font-size: 2.5rem;
-      display: flex;
-      justify-content: center;
-      align-items: center;
-      animation: colorChange 3s infinite alternate;
-      z-index: 9999;
-      text-align: center;
-      padding: 20px;
+    :root {
+      --color-naranja: #ff9f43;
+      --color-gris-fondo: #1e293b;
+      --color-gris-borde: #334155;
+      --color-neon-verde: #10b981;
+      --color-rojo-vivo: #ef4444;
+      --fondo-cristal-oscuro: rgba(15, 23, 42, 0.75);
+      --borde-cristal-premium: rgba(255, 255, 255, 0.15);
     }
 
-    @keyframes colorChange {
-      0% { color: yellow; }
-      50% { color: blue; }
-      100% { color: red; }
-    }
+    * { box-sizing: border-box; margin: 0; padding: 0; font-family: 'Segoe UI', system-ui, sans-serif; }
 
-    /* --- Reset básico --- */
-    * {
-      box-sizing: border-box;
-      margin: 0;
-      padding: 0;
-    }
-
-    body, html {
-      height: 100%;
-      font-family: 'Roboto', sans-serif;
-      background: url('https://images.unsplash.com/photo-1504384308090-c894fdcc538d?ixlib=rb-4.0.3&auto=format&fit=crop&w=1950&q=80') no-repeat center center fixed;
+    body {
+      /* Fondo corporativo idéntico a tu fotografía de escritorio */
+      background: linear-gradient(rgba(9, 13, 22, 0.20), rgba(17, 24, 39, 0.88)), 
+                  url('img/fondo.jpg');
+      background-position: center;
       background-size: cover;
-      color: #fff;
+      background-attachment: fixed;
+      color: #ffffff;
       display: flex;
       flex-direction: column;
       min-height: 100vh;
+      align-items: center;
+      padding: 15px;
     }
 
-    /* --- Contenedor principal --- */
-    .container {
+    header {
+      width: 100%;
+      max-width: 750px;
+      padding: 10px 0;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      gap: 12px;
+    }
+
+    .logo-presentacion {
+      max-width: 130px;
+      height: auto;
+      border-radius: 8px;
+      box-shadow: 0 4px 15px rgba(0,0,0,0.5);
+    }
+
+    .botones-cabecera {
+      display: flex;
+      width: 100%;
+      justify-content: space-between;
+      gap: 8px;
+    }
+
+    .btn-nav {
+      flex: 1;
+      padding: 10px;
+      border: 1px solid var(--borde-cristal-premium);
+      border-radius: 6px;
+      font-weight: bold;
+      color: white;
+      cursor: pointer;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 6px;
+      font-size: 12px;
+      text-decoration: none;
+      backdrop-filter: blur(12px);
+      -webkit-backdrop-filter: blur(12px);
+      background: rgba(255, 255, 255, 0.05);
+      transition: background 0.3s;
+    }
+    .btn-whatsapp { background-color: rgba(37, 211, 102, 0.35); }
+    .btn-publicidad { background-color: rgba(59, 130, 246, 0.35); }
+    .btn-contacto { background-color: rgba(168, 85, 247, 0.35); position: relative; }
+
+    /* CONTENEDOR DE CONTACTOS */
+    .contenedor-contacto {
+      display: none;
+      width: 100%;
+      max-width: 750px;
+      background: var(--fondo-cristal-oscuro);
+      backdrop-filter: blur(16px);
+      -webkit-backdrop-filter: blur(16px);
+      border: 1px solid var(--borde-cristal-premium);
+      padding: 15px;
+      border-radius: 12px;
+      margin-bottom: 12px;
+    }
+    .chat-respuesta-admin {
+      background: rgba(56, 189, 248, 0.15);
+      border-left: 4px solid #38bdf8;
+      padding: 10px;
+      border-radius: 4px;
+      margin-bottom: 12px;
+      font-size: 13px;
+    }
+    .caja-inputs-contacto { display: flex; gap: 8px; }
+    .contenedor-contacto input {
+      flex: 1; padding: 10px; border: 1px solid rgba(255,255,255,0.15); background: rgba(0,0,0,0.4); color: white; border-radius: 6px; font-size: 13px;
+    }
+    .contenedor-contacto button {
+      padding: 10px 18px; background: var(--color-neon-verde); color: white; border: none; border-radius: 6px; cursor: pointer; font-weight: bold;
+    }
+
+    /* REPRODUCTOR PROFESIONAL ESTILO CONSOLA MÁSTER */
+    .reproductor-box {
+      width: 100%;
+      max-width: 750px;
+      background: rgba(30, 41, 59, 0.55);
+      backdrop-filter: blur(20px);
+      -webkit-backdrop-filter: blur(20px);
+      border: 1px solid var(--borde-cristal-premium);
+      border-radius: 14px;
+      padding: 20px;
+      box-shadow: 0 15px 35px rgba(0, 0, 0, 0.5);
+      display: flex;
+      flex-direction: column;
+      gap: 15px;
+    }
+
+    .banner-live-streaming {
+      width: 100%;
+      text-align: center;
+      font-size: 11px;
+      font-weight: bold;
+      letter-spacing: 1px;
+      color: var(--color-rojo-vivo);
+      animation: parpadeoNeon 1.5s infinite;
+    }
+    @keyframes parpadeoNeon { 50% { opacity: 0.3; } }
+
+    .monitor-pantalla {
+      width: 100%;
+      aspect-ratio: 16 / 9;
+      background: #020617;
+      border-radius: 10px;
+      overflow: hidden;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      border: 1px solid rgba(255, 255, 255, 0.05);
+    }
+    .monitor-pantalla img { width: 100%; height: 100%; object-fit: contain; }
+    .monitor-pantalla video { width: 100%; height: 100%; display: none; }
+
+    /* SECCIÓN DE INGENIERÍA: LED Y ONDAS SYNCHRO */
+    .seccion-ondas-led {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      background: rgba(0,0,0,0.3);
+      padding: 10px 15px;
+      border-radius: 8px;
+      border: 1px solid rgba(255,255,255,0.05);
+    }
+
+    .indicadores-sincronizacion {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      font-size: 13px;
+      color: #e2e8f0;
+    }
+
+    /* SISTEMA DE LED FÍSICO OPTIMIZADO */
+    .led-indicador {
+      width: 12px;
+      height: 12px;
+      background-color: #64748b;
+      border-radius: 50%;
+      box-shadow: inset 0 1px 3px rgba(0,0,0,0.5);
+      transition: background-color 0.3s;
+    }
+    .led-indicador.parpadeo-cargando { background-color: #eab308; animation: parpadeoNeon 0.8s infinite; }
+    .led-indicador.led-verde-activo { background-color: var(--color-neon-verde); box-shadow: 0 0 10px var(--color-neon-verde); }
+
+    /* BARRAS DE ECUALIZACIÓN ANIMADAS */
+    .barra-ecualizadora {
+      display: flex;
+      align-items: flex-end;
+      gap: 3px;
+      height: 20px;
+    }
+    .barra-eq {
+      width: 3px;
+      height: 3px;
+      background-color: #38bdf8;
+      border-radius: 2px;
+      transition: height 0.1s;
+    }
+    .barra-eq.animando { animation: saltarOnda 0.6s ease infinite alternate; }
+    #eqBar1.animando { animation-delay: 0.1s; }
+    #eqBar2.animando { animation-delay: 0.3s; }
+    #eqBar3.animando { animation-delay: 0.5s; }
+    #eqBar4.animando { animation-delay: 0.2s; }
+    #eqBar5.animando { animation-delay: 0.4s; }
+    @keyframes saltarOnda { 100% { height: 18px; background-color: var(--color-naranja); } }
+
+    .metadata-cancion {
+      text-align: center;
+      font-size: 12px;
+      color: #94a3b8;
+      font-style: italic;
+    }
+
+    /* CONSOLA DE MANDOS HORIZONTAL SINCRONIZADA */
+    .barra-controles-horizontal {
+      display: flex;
+      align-items: center;
+      background: rgba(15, 23, 42, 0.8);
+      border: 1px solid rgba(255,255,255,0.08);
+      border-radius: 10px;
+      padding: 10px 15px;
+      gap: 15px;
+    }
+
+    /* BOTÓN PLAY COMERCIAL REDISEÑADO CON SVG */
+    .btn-play-maestro {
+      background: linear-gradient(135deg, #10b981, #059669);
+      border: none;
+      width: 44px;
+      height: 44px;
+      border-radius: 50%;
+      cursor: pointer;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      box-shadow: 0 4px 10px rgba(16, 185, 129, 0.3);
+    }
+    .btn-play-maestro svg { width: 16px; height: 16px; fill: white; }
+
+    /* CONTRACCIÓN DEL VOLUMEN A LA IZQUIERDA ADAPTADO */
+    .control-volumen-box {
       flex: 1;
       display: flex;
-      flex-direction: column;
       align-items: center;
-      padding: 1rem 1.5rem 4rem 1.5rem;
-      background: rgba(0,0,0,0.5);
-      backdrop-filter: blur(5px);
-      max-width: 900px;
-      margin: 0 auto;
-      border-radius: 12px;
-      margin-top: 80px;
-    }
-
-    /* --- Botones superior --- */
-    nav {
-      position: fixed;
-      top: 0; left: 0; right: 0;
-      background: rgba(0,0,0,0.8);
-      padding: 10px 20px;
-      display: flex;
-      justify-content: center;
-      gap: 20px;
-      z-index: 1000;
-      border-bottom: 2px solid #f39c12;
-    }
-
-    nav a, nav button {
-      background: #f39c12;
-      color: #000;
-      padding: 10px 20px;
-      border-radius: 25px;
-      text-decoration: none;
-      font-weight: 600;
-      cursor: pointer;
-      transition: background-color 0.3s ease;
-      border: none;
-      font-size: 1rem;
-      user-select: none;
-    }
-
-    nav a:hover, nav button:hover {
-      background: #d35400;
-      color: #fff;
-    }
-
-    /* --- Reproductor --- */
-    .player {
-      margin-top: 20px;
-      background: rgba(255 255 255 / 0.1);
-      border-radius: 15px;
-      padding: 20px;
-      width: 100%;
-      max-width: 600px;
-      display: flex;
-      flex-direction: column;
-      align-items: center;
-      box-shadow: 0 0 15px rgba(243,156,18,0.7);
-      transition: background-color 0.4s ease;
-    }
-
-    .player-logo {
-      width: 120px;
-      height: 120px;
-      background: #fff;
-      border-radius: 50%;
-      margin-bottom: 15px;
-      overflow: hidden;
-      box-shadow: 0 0 10px #f39c12;
-      flex-shrink: 0;
-    }
-
-    .player-logo img {
-      width: 100%;
-      height: 100%;
-      object-fit: contain;
-      filter: drop-shadow(1px 1px 2px #f39c12);
-    }
-
-    .controls {
-      display: flex;
-      align-items: center;
-      gap: 15px;
-      margin-bottom: 15px;
-      width: 100%;
-      justify-content: center;
-      flex-wrap: wrap;
-    }
-
-    .controls button {
-      background: #f39c12;
-      border: none;
-      border-radius: 50%;
-      width: 45px;
-      height: 45px;
-      font-size: 1.2rem;
-      color: #000;
-      cursor: pointer;
-      transition: background-color 0.3s ease;
-      display: flex;
-      justify-content: center;
-      align-items: center;
-      user-select: none;
-    }
-
-    .controls button:hover {
-      background: #d35400;
-      color: #fff;
-    }
-
-    .volume-slider {
-      width: 100px;
-    }
-
-    .color-selector {
-      margin-left: 10px;
+      gap: 10px;
+      background: rgba(0,0,0,0.2);
+      padding: 6px 12px;
       border-radius: 6px;
-      border: none;
+    }
+    .control-volumen-box svg { width: 14px; height: 14px; fill: var(--color-naranja); }
+    
+    .slider-volumen {
+      flex: 1;
+      -webkit-appearance: none;
+      height: 4px;
+      background: #475569;
+      border-radius: 2px;
+      outline: none;
+    }
+    .slider-volumen::-webkit-slider-thumb {
+      -webkit-appearance: none;
+      width: 14px;
+      height: 14px;
+      border-radius: 50%;
+      background: var(--color-naranja);
       cursor: pointer;
-      width: 40px;
-      height: 40px;
-      padding: 0;
     }
 
-    /* --- Canvas gráfico de ondas --- */
-    #waveform {
-      width: 100%;
-      height: 60px;
-      border-radius: 8px;
-      background: rgba(0, 0, 0, 0.3);
-      box-shadow: inset 0 0 10px #f39c12;
-    }
-
-    /* --- Texto de bienvenida emisora --- */
-    .info-text {
-      margin-top: 25px;
-      text-align: center;
-      max-width: 600px;
-      font-size: 1.2rem;
-      line-height: 1.5;
-      color: #fff;
-    }
-
-    .info-text .curved {
-      font-family: 'Pacifico', cursive;
-      font-size: 1.8rem;
-      display: block;
-      margin-bottom: 10px;
-      color: #f39c12;
-      text-shadow: 0 0 10px #f39c12;
-    }
-
-    /* --- Container concursos --- */
-    .contest-container {
-      margin-top: 30px;
-      background: rgba(255 255 255 / 0.1);
-      padding: 15px 20px;
-      border-radius: 15px;
-      width: 100%;
-      max-width: 600px;
-      box-shadow: 0 0 10px rgba(192, 57, 43, 0.7);
-      color: #fff;
-      text-align: center;
-      font-weight: 600;
-      font-size: 1.1rem;
-      user-select: none;
-    }
-
-    .contest-container.active {
-      background-color: rgba(39, 174, 96, 0.8);
-      box-shadow: 0 0 10px rgba(39, 174, 96, 0.9);
-    }
-
-    .contest-container.inactive {
-      background-color: rgba(192, 57, 43, 0.8);
-      box-shadow: 0 0 10px rgba(192, 57, 43, 0.9);
-    }
-
-    /* --- Footer --- */
-    footer {
-      background: rgba(0,0,0,0.85);
-      padding: 20px;
-      text-align: center;
-      color: #f39c12;
-      font-weight: 600;
-      position: relative;
-      z-index: 10;
-    }
-
-    /* Redes sociales footer */
-    .social-icons {
-      margin-top: 10px;
+    /* BOTONERA MODO RADIO / VIDEO REDISEÑADA Y ESTILIZADA */
+    .controles-reproductor {
       display: flex;
+      width: 100%;
+      gap: 10px;
+      border-top: 1px solid rgba(255,255,255,0.05);
+      padding-top: 12px;
+    }
+
+    .btn-modo {
+      flex: 1;
+      padding: 12px;
+      border: 1px solid rgba(255, 255, 255, 0.1);
+      background: linear-gradient(135deg, #334155, #1e293b);
+      color: #94a3b8;
+      border-radius: 8px;
+      cursor: pointer;
+      font-weight: bold;
+      font-size: 12px;
+      letter-spacing: 0.5px;
+      display: flex;
+      align-items: center;
       justify-content: center;
-      gap: 25px;
+      gap: 8px;
+      transition: background 0.3s, color 0.3s;
+    }
+    .btn-modo svg { width: 14px; height: 14px; fill: #94a3b8; }
+    
+    /* Estado activo premium con relieve naranja corporativo */
+    .btn-modo.activo {
+      background: linear-gradient(135deg, #ff9f43, #ff7f00);
+      color: white;
+      border-color: #ff9f43;
+      box-shadow: 0 4px 15px rgba(255, 159, 67, 0.3);
+    }
+    .btn-modo.activo svg { fill: white; }
+
+    .marcador-oyentes {
+      text-align: center;
+      font-size: 11px;
+      color: #cbd5e1;
+      font-weight: bold;
     }
 
-    .social-icons a {
-      color: #f39c12;
-      font-size: 1.8rem;
-      text-decoration: none;
-      transition: color 0.3s ease;
+    /* SECCIÓN DE TEXTOS CURSIVOS */
+    .info-estacion { text-align: center; margin: 20px 10px; max-width: 750px; }
+    .bienvenida-titulo-cursiva {
+      font-family: 'Brush Script MT', 'Comic Sans MS', cursive;
+      font-size: 36px;
+      color: var(--color-naranja);
+      margin-bottom: 8px;
+      text-shadow: 0 0 10px rgba(255, 159, 67, 0.3), 0 2px 4px rgba(0,0,0,0.8);
+    }
+    .subtitulo-estacion { font-size: 13px; color: #cbd5e1; line-height: 1.6; }
+
+    /* NUEVAS SECCIONES ADAPTADAS PARA LLENAR LA PÁGINA */
+    
+    /* 📋 PARRILLA DE PROGRAMACIÓN DIGITAL */
+    .seccion-parrilla {
+      width: 100%;
+      max-width: 520px;
+      background: rgba(17, 24, 39, 0.45);
+      border: 1px solid rgba(255, 255, 255, 0.1);
+      border-radius: 12px;
+      padding: 16px;
+      margin-bottom: 25px;
+      box-shadow: 0 10px 25px rgba(0,0,0,0.4);
+    }
+    .seccion-parrilla h3 {
+      font-size: 14px;
+      color: #38bdf8;
+      margin-bottom: 12px;
+      text-transform: uppercase;
+      letter-spacing: 0.5px;
+      display: flex;
+      align-items: center;
+      gap: 8px;
+    }
+    .item-programa {
+      display: flex;
+      justify-content: space-between;
+      padding: 8px 0;
+      border-bottom: 1px solid rgba(255,255,255,0.05);
+      font-size: 13px;
+    }
+    .item-programa:last-child { border-bottom: none; }
+    .prog-hora { color: #ff9f43; font-weight: bold; }
+    .prog-titulo { color: #f8fafc; }
+
+    /* SECCIÓN DE TEXTOS CURSIVOS */
+    .bienvenida-titulo-cursiva {
+      font-family: 'Brush Script MT', 'Comic Sans MS', cursive;
+      font-size: 34px;
+      color: #ff9f43;
+      margin-bottom: 10px;
+      line-height: 1.2;
+      text-shadow: 0 0 12px rgba(255, 159, 67, 0.4), 0 2px 4px rgba(0,0,0,0.8);
     }
 
-    .social-icons a:hover {
-      color: #d35400;
+    .subtitulo-estacion {
+      font-size: 14px;
+      color: #cbd5e1;
+      line-height: 1.6;
+      max-width: 520px;
+      margin: 0 auto;
     }
 
-    /* Iconos con SVG */
-    svg {
-      vertical-align: middle;
-      fill: currentColor;
-      width: 24px;
-      height: 24px;
+    /* BANNERS INFERIORES SIMÉTRICOS */
+    .banner-destacados-cantantes {
+      width: 100%;
+      background: linear-gradient(135deg, rgba(30, 41, 59, 0.6), rgba(15, 23, 42, 0.6));
+      border: 1px solid rgba(56, 189, 248, 0.25);
+      padding: 14px;
+      border-radius: 10px;
+      font-size: 13px;
+      text-align: center;
+      color: #38bdf8;
+      font-weight: bold;
+      margin-bottom: 15px;
+      box-shadow: 0 4px 20px rgba(0,0,0,0.4);
     }
 
-    /* Responsive */
-    @media (max-width: 650px) {
-      nav {
-        flex-wrap: wrap;
-        gap: 10px;
-        padding: 8px 10px;
-      }
-      .controls {
-        justify-content: center;
-      }
-      .volume-slider {
-        width: 80px;
-      }
+    .banner-eventos-concursos {
+      width: 100%;
+      padding: 14px;
+      border-radius: 10px;
+      text-align: center;
+      font-size: 13px;
+      font-weight: bold;
+      margin-bottom: 25px;
+      box-shadow: 0 6px 20px rgba(0, 0, 0, 0.4);
     }
-    
-    
-    
-    
-    
-    /* Estilos para el mensaje de advertencia */
-    #warning-message {
+    .banner-verde { background: linear-gradient(135deg, rgba(16, 185, 129, 0.75), rgba(5, 150, 105, 0.75)); border: 1px solid rgba(16, 185, 129, 0.4); color: white; }
+    .banner-rojo { background: linear-gradient(135deg, rgba(239, 68, 68, 0.75), rgba(185, 28, 28, 0.75)); border: 1px solid rgba(239, 68, 68, 0.4); color: white; }
+
+    /* PANTALLA DE MANTENIMIENTO GLASSMORPHIC */
+    .pantalla-mantenimiento-glass {
       display: none;
       position: fixed;
-      top: 0; left: 0; right: 0;
-      background-color: #ffcc00;
-      color: #000;
-      font-weight: bold;
-      padding: 1em;
+      top: 0; left: 0; width: 100%; height: 100%;
+      background: rgba(9, 13, 22, 0.75);
+      backdrop-filter: blur(25px);
+      -webkit-backdrop-filter: blur(25px);
+      z-index: 99999;
+      color: white;
+      flex-direction: column;
+      justify-content: center;
+      align-items: center;
       text-align: center;
-      z-index: 9999;
-      font-family: Arial, sans-serif;
+      padding: 25px;
+    }
+
+    .box-mantenimiento-interno {
+      background: rgba(30, 41, 59, 0.55);
+      border: 1px solid rgba(255, 255, 255, 0.15);
+      padding: 35px 25px;
+      border-radius: 16px;
+      max-width: 530px;
+      box-shadow: 0 25px 60px rgba(0,0,0,0.6);
+    }
+
+    .timer-mantenimiento {
+      margin-top: 25px;
+      font-family: 'Courier New', Courier, monospace;
+      font-size: 22px;
+      color: #ff9f43;
+      font-weight: bold;
+      letter-spacing: 1px;
+    }
+
+    footer {
+      margin-top: auto;
+      width: 100%;
+      text-align: center;
+      padding: 20px;
+      font-size: 12px;
+      color: #64748b;
+      border-top: 1px solid rgba(255, 255, 255, 0.05);
+    }
+
+    @media (max-width: 600px) {
+      .botones-cabecera { flex-direction: column; gap: 8px; }
+      .bienvenida-titulo-cursiva { font-size: 28px; }
+      .caja-inputs-contacto { flex-direction: column; }
     }
   </style>
 </head>
 <body>
 
- <div id="warning-message" role="alert" aria-live="assertive">
-    Atención: esta páginas intenta proteger su código fuente.
-  
-  <h1>Disculpa está acción está bloqueada</h1>
-  <p></p>
-</div>
+  <!-- LAYER DE EDICIÓN TÉCNICA -->
+  <div id="pantallaMantenimiento" class="pantalla-mantenimiento-glass">
+    <div class="box-mantenimiento-interno">
+      <h1 style="color: #ef4444; font-size: 24px; margin-bottom: 15px;"><i class="fas fa-tools"></i> OPTIMIZACIÓN TÉCNICA</h1>
+      <p style="color: #e2e8f0; font-size: 15px; line-height: 1.6;">Estimado oyente, en este momento nuestra plataforma se encuentra en optimización técnica. En breves momentos estaremos al aire. Agradecemos su valiosa fidelidad.</p>
+      <div id="timerMantenimiento" class="timer-mantenimiento">Tiempo transcurrido: 00:00:00</div>
+    </div>
+  </div>
 
-  <!-- Navegación superior -->
-  <nav>
-    <a href=" https://chat.whatsapp.com/JLIjsB9t6VG70JwjL5A0ai" target="_blank" rel="noopener" aria-label="Grupo WhatsApp">WhatsApp</a>
+  <header>
+    <img id="logoCabecera" src="" alt="VIVE FM Portada" class="logo-presentacion" style="display:none;">
     
-    <button id="btnPublicidad" aria-label="Publicidad" onclick="window.location.href='publicidad.html'">Publicidad</button>
-    
-    
-    <button id="btnRedes" aria-label="Redes Sociales">Redes sociales</button>
-  </nav>
+    <div class="botones-cabecera">
+      <a href=" https://chat.whatsapp.com/JLIjsB9t6VG70JwjL5A0ai?s=cl&p=a&mlu=4&ilr=4" target="_blank" class="btn-nav btn-whatsapp">
+        <i class="fab fa-whatsapp"></i> WhatsApp
+      </a>
+      <a href="page2.html" class="btn-nav btn-publicidad">
+        <i class="fas fa-ad"></i> Publicidad
+      </a>
+      <button class="btn-nav btn-contacto" onclick="toggleContacto()">
+        <i class="fas fa-envelope"></i> Enviar mensaje a locutor de turno<i id="iconoCampanita" class="fas fa-bell campanita"></i>
+      </button>
+    </div>
+  </header>
 
-  <main class="container" role="main">
-    <!-- Reproductor -->
-    <section class="player" id="player">
-      <div class="player-logo" aria-label="Logo de la emisora">
-        <img src="img/logo.jpg" alt="Logo VIVE FM" />
+  <!-- Ventana Interactiva de Notificaciones Cruzadas -->
+  <div id="boxContacto" class="contenedor-contacto">
+    <p><i class="fas fa-comments"></i> Chat en Vivo con Cabina: Envía tus saludos directamente al locutor de turno.</p>
+    <div id="chatAdminBox" class="chat-respuesta-admin" style="display:none;"></div>
+    <div class="caja-inputs-contacto">
+      <input type="text" id="txtMensajeOyente" placeholder="Escribe tu mensaje para la emisora aquí...">
+      <button onclick="enviarMensaje()">Enviar</button>
+    </div>
+  </div>
+
+  <!-- CONSOLA DE REPRODUCCIÓN PREMIUM -->
+  <main class="reproductor-box">
+    <div id="bannerTransmisionVivo" class="banner-live-streaming"><i class="fas fa-broadcast-tower"></i> 🔴 TRANSMISIÓN EN VIVO</div>
+
+    <div class="monitor-pantalla">
+      <img id="monitorImagen" src="" alt="Logo Emisora">
+      <video id="monitorVideo" controls></video>
+      <div id="contenedorYoutube" style="width:100%; height:100%; display:none;"></div>
+    </div>
+
+    <!-- Sección de Monitoreo Analógico -->
+    <div class="seccion-ondas-led">
+      <div class="indicadores-sincronizacion">
+        <div id="ledSincro" class="led-indicador"></div>
+        <div id="txtSincro">⏳ Cargando sintonía...</div>
+        <div id="cronometroStreaming" style="margin-left: auto; color: #a855f7; font-weight: bold;">00:00:00</div>
       </div>
 
-      <audio id="audioPlayer" crossorigin="anonymous" preload="auto">
-        <!-- Ejemplo de URL streaming. Cambiar por la URL real -->
-        <source src=" https://stream.zeno.fm/ctv5k5brgpfvv" type="audio/mpeg" />
-        Tu navegador no soporta audio HTML5.
-      </audio>
-
-      <div class="controls" role="group" aria-label="Controles del reproductor">
-        <button id="btnPlay" aria-label="Reproducir">&#9658;</button>
-        <button id="btnPause" aria-label="Pausar" disabled>&#10074;&#10074;</button>
-        <input type="range" id="volumeControl" class="volume-slider" min="0" max="1" step="0.01" aria-label="Control de volumen" value="1" />
-        <input type="color" id="colorPicker" class="color-selector" aria-label="Selector de color del reproductor" title="Cambiar color del reproductor" value="#f39c12" />
+      <div class="barra-ecualizadora">
+        <div id="eqBar1" class="barra-eq"></div>
+        <div id="eqBar2" class="barra-eq"></div>
+        <div id="eqBar3" class="barra-eq"></div>
+        <div id="eqBar4" class="barra-eq"></div>
+        <div id="eqBar5" class="barra-eq"></div>
       </div>
+    </div>
 
-      <canvas id="waveform" aria-label="Visualización gráfica de ondas"></canvas>
-    </section>
+    <div id="txtMetadataCancion" class="metadata-cancion">Sintonizando señal de audio...</div>
 
-    <!-- Texto informativo -->
-    <section class="info-text" aria-live="polite">
-      <span class="curved">Bienvenidos a vive fm Siempre contigo</span>
-      Ciudad Bolívar, Venezuela, Esta emisora está diseñada para transmitir palabras de Dios y entretener las 24 horas 100% música cristiana.
-    </section>
+    <!-- Consola de Control Unificada con Ajuste Ergonómico -->
+    Control de volumen y play
+    <div
+     class="barra-controles-horizontal">
+      <div class="control-volumen-box">
+        <i id="iconoVolumen" class="fas fa-volume-up" style="color: #ff9f43; font-size: 13px;">Vol.</i>
+        <input type="range" id="sliderVolumen" min="0" max="1" step="0.05" value="1" oninput="ajustarVolumen(this.value)">
+      </div>
+      
+      
+      <button id="btnPlay" class="btn-play-maestro" onclick="controlarReproduccion()"><i class="fas fa-play">Play</i></button>
+    </div>
 
-    <!-- Container concursos -->
-    <section class="contest-container inactive" id="contestContainer" aria-live="polite" aria-atomic="true">
-      En estos momentos no tenemos concurso en la emisora le estaremos avisando
-    </section>
+    <!-- Botonera de Conmutación Avanzada con Efecto Neón -->
+    <div class="controles-reproductor">
+      <button id="btnRadio" class="btn-modo activo" onclick="cambiarModo('radio')"><i class="fas fa-radio"></i> MODO RADIO</button>
+      <button id="btnVideo" class="btn-modo" onclick="cambiarModo('video')"><i class="fas fa-video"></i> MODO VIDEO</button>
+    </div>
+
+    <div class="marcador-oyentes"><i class="fas fa-users"></i> Oyentes en tiempo real: <span id="numOyentes">0</span></div>
   </main>
 
-  <!-- Footer -->
-  <footer>
-    © VIVE FM - SIEMPRE CONTIGO
-    <div class="social-icons" aria-label="Redes sociales">
-      <a href=" https://facebook.com/groups/1390124162882958/" target="_blank" rel="noopener" aria-label="Facebook">
-        <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M22 12a10 10 0 1 0-11.5 9.9v-7h-2v-3h2v-2c0-2 1-3 3-3h2v3h-2c-.5 0-1 .5-1 1v2h3l-1 3h-2v7A10 10 0 0 0 22 12"/></svg>
-      </a>
-      <a href=" https://www.tiktok.com/@alkngel8?_r=1&_t=ZS-974ztfEZ10R" target="_blank" rel="noopener" aria-label="TikTok">
-        <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M9 3v12a4 4 0 1 0 4-4h3V3h-3a7 7 0 1 1-4 7"/></svg>
-      </a>
-      <a href="https://chat.whatsapp.com/JLIjsB9t6VG70JwjL5A0ai " target="_blank" rel="noopener" aria-label="WhatsApp">
-        <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.472-.148-.67.15-.198.297-.767.967-.94 1.165-.173.198-.347.223-.644.075-.297-.149-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.372-.025-.52-.075-.148-.67-1.611-.916-2.206-.242-.579-.487-.5-.67-.51l-.57-.01c-.198 0-.52.074-.792.372s-1.04 1.016-1.04 2.479 1.065 2.876 1.213 3.074c.149.198 2.095 3.2 5.076 4.487.709.306 1.262.489 1.694.625.712.226 1.36.194 1.872.118.571-.085 1.758-.719 2.006-1.413.248-.695.248-1.29.173-1.413-.074-.123-.272-.198-.57-.347z"/></svg>
-      </a>
-      <a href="https://www.instagram.com/vive_fm3988?igsh=MTR6cGdlNGgwM2g5OQ== " target="_blank" rel="noopener" aria-label="Instagram">
-        <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M7 2C4.243 2 2 4.243 2 7v10c0 2.757 2.243 5 5 5h10c2.757 0 5-2.243 5-5V7c0-2.757-2.243-5-5-5H7zm10 2a3 3 0 1 1-6 0 3 3 0 0 1 6 0zm-5 3a5 5 0 1 0 0 10 5 5 0 0 0 0-10z"/></svg>
-      </a>
+  <!-- NUEVA FUNCIÓN: PARRILLA DE PROGRAMACIÓN DIGITAL INTERACTIVA -->
+  <section class="seccion-parrilla">
+    <h3><i class="far fa-calendar-alt"></i> Programación de Hoy</h3>
+    <div class="item-programa">
+      <span class="prog-hora">06:00 AM</span>
+      <span class="prog-titulo">Parrilla musical continua</span>
     </div>
-  </footer>
+    <div class="item-programa">
+      <span class="prog-hora">09:00 AM</span>
+      <span class="prog-titulo">Parrilla musical continua</span>
+    </div>
+    <div class="item-programa">
+      <span class="prog-hora">12:00 PM</span>
+      <span class="prog-titulo">Parrilla musical continua</span>
+    </div>
+    <div class="item-programa">
+      <span class="prog-hora">03:00 PM</span>
+      <span class="prog-titulo">Parrilla musical continua</span>
+    </div>
+    <div class="item-programa">
+      <span class="prog-hora">07:00 PM</span>
+      <span class="prog-titulo">Parrilla musical continua</span>
+    </div>
+  </section>
+
+  <!-- TEXTOS INFERIORES -->
+  <section class="info-estacion">
+    <div id="txtBienvenida" class="bienvenida-titulo-cursiva">Cargando...</div>
+    <div class="subtitulo-estacion">Ciudad Bolívar, Venezuela. Esta plataforma digital está diseñada para transmitir la palabra de Dios y entretener las 24 horas del día con una programación 100% de música cristiana.</div>
+  </section>
+
+  <div id="bannerCantantes" class="banner-destacados-cantantes">
+    <i class="fas fa-music"></i> Promocional: En busca de lista de cantantes destacados para mostrar
+  </div>
+
+  <div id="bannerAlertas" class="banner-eventos-concursos banner-rojo">
+    Cargando información de la emisora...
+  </div>
+
+  <footer>© VIVE FM ONLINE SIEMPRE CONTIGO</footer>
+
+  <audio id="streamingAudio" crossorigin="anonymous"></audio>
 
   <script>
-    // Esperar que DOM cargue
-    document.addEventListener('DOMContentLoaded', () => {
-      const welcomeScreen = document.getElementById('welcome-screen');
-      const audio = document.getElementById('audioPlayer');
-      const btnPlay = document.getElementById('btnPlay');
-      const btnPause = document.getElementById('btnPause');
-      const volumeControl = document.getElementById('volumeControl');
-      const colorPicker = document.getElementById('colorPicker');
-      const player = document.getElementById('player');
-      const canvas = document.getElementById('waveform');
-      const contestContainer = document.getElementById('contestContainer');
-      const btnPublicidad = document.getElementById('btnPublicidad');
-      const btnRedes = document.getElementById('btnRedes');
 
-      // Mostrar bienvenida 3 segundos y ocultar
-      setTimeout(() => {
-        welcomeScreen.style.opacity = '0';
-        setTimeout(() => welcomeScreen.style.display = 'none', 800);
-      }, 3000);
+    // =========================================================================
+    // 🔗 COLOQUE AQUÍ ABAJO SU URL DE GOOGLE APPS SCRIPT TERMINADA EN /exec
+    // =========================================================================
+    const URL_SERVIDOR_API = "https://script.google.com/macros/s/AKfycbyR81HPmlQ-JVtgHPh6LsVxG-TA57T9ZW-bQ53UyVj8LJAkrqtKeTNGNW6a_TDZgD8jKw/exec";
 
-      // Auto reproducir (con manejo de promesas para evitar error navegador)
-      function tryPlay() {
-        audio.play().catch(e => {
-          console.warn('Autoplay falló, esperando interacción del usuario');
-        });
-      }
-      tryPlay();
+    let urlRadio = ""; let urlVideo = ""; let modoActual = "radio"; let reproduciendo = false;
+    let cronoStreamingInterval; let segundosStreaming = 0;
+    let cronoMantenimientoInterval; let segundosMantenimiento = 0;
 
-      // Botones play/pausa
-      btnPlay.addEventListener('click', () => {
-        audio.play();
-        btnPlay.disabled = true;
-        btnPause.disabled = false;
-      });
+    const audioPlayer = document.getElementById("streamingAudio");
+    const videoPlayer = document.getElementById("monitorVideo");
+    const imgMonitor = document.getElementById("monitorImagen");
+    const ytContainer = document.getElementById("contenedorYoutube");
 
-      btnPause.addEventListener('click', () => {
-        audio.pause();
-        btnPlay.disabled = false;
-        btnPause.disabled = true;
-      });
-
-      // Actualizar botones al cambiar estado manualmente
-      audio.addEventListener('play', () => {
-        btnPlay.disabled = true;
-        btnPause.disabled = false;
-      });
-
-      audio.addEventListener('pause', () => {
-        btnPlay.disabled = false;
-        btnPause.disabled = true;
-      });
-
-      // Control volumen
-      volumeControl.addEventListener('input', () => {
-        audio.volume = volumeControl.value;
-      });
-
-      // Cambiar color del reproductor
-      colorPicker.addEventListener('input', (e) => {
-        player.style.backgroundColor = hexToRGBA(e.target.value, 0.15);
-        player.style.boxShadow = `0 0 15px ${e.target.value}`;
-      });
-
-      // Función helper para convertir hex a rgba con alpha
-      function hexToRGBA(hex, alpha) {
-        let r = 0, g = 0, b = 0;
-        if (hex.length === 4) {
-          r = parseInt(hex[1] + hex[1], 16);
-          g = parseInt(hex[2] + hex[2], 16);
-          b = parseInt(hex[3] + hex[3], 16);
-        } else if (hex.length === 7) {
-          r = parseInt(hex[1] + hex[2], 16);
-          g = parseInt(hex[3] + hex[4], 16);
-          b = parseInt(hex[5] + hex[6], 16);
-        }
-        return `rgba(${r},${g},${b},${alpha})`;
-      }
-
-      // Visualización gráfica de ondas con Web Audio API
-      const audioContext = new (window.AudioContext || window.webkitAudioContext)();
-      const analyser = audioContext.createAnalyser();
-      analyser.fftSize = 256;
-      const source = audioContext.createMediaElementSource(audio);
-      source.connect(analyser);
-      analyser.connect(audioContext.destination);
-
-      const canvasCtx = canvas.getContext('2d');
-      const WIDTH = canvas.width = canvas.offsetWidth;
-      const HEIGHT = canvas.height = canvas.offsetHeight;
-      const bufferLength = analyser.frequencyBinCount;
-      const dataArray = new Uint8Array(bufferLength);
-
-      function draw() {
-        requestAnimationFrame(draw);
-
-        analyser.getByteTimeDomainData(dataArray);
-
-        canvasCtx.fillStyle = 'rgba(0, 0, 0, 0.15)';
-        canvasCtx.fillRect(0, 0, WIDTH, HEIGHT);
-
-        canvasCtx.lineWidth = 2;
-        canvasCtx.strokeStyle = colorPicker.value || '#f39c12';
-        canvasCtx.beginPath();
-
-        const sliceWidth = WIDTH / bufferLength;
-        let x = 0;
-
-        for(let i = 0; i < bufferLength; i++) {
-          const v = dataArray[i] / 128.0;
-          const y = v * HEIGHT / 2;
-
-          if(i === 0) {
-            canvasCtx.moveTo(x, y);
+    function sincronizarDatos() {
+      const parametroVisita = (segundosStreaming === 0 && !reproduciendo) ? "?visita=true" : "";
+      
+      fetch(URL_SERVIDOR_API + parametroVisita)
+        .then(res => res.json())
+        .then(config => {
+          urlRadio = config.Link_Radio;
+          urlVideo = config.Link_Video;
+          
+          document.getElementById("numOyentes").innerText = config.Contador_Visitas || "1";
+          document.getElementById("txtBienvenida").innerText = config.Texto_Bienvenida;
+          
+          if(config.Url_Portada) {
+            document.getElementById("logoCabecera").src = config.Url_Portada;
+            document.getElementById("logoCabecera").style.display = "block";
           } else {
-            canvasCtx.lineTo(x, y);
+            document.getElementById("logoCabecera").style.display = "none";
           }
 
-          x += sliceWidth;
-        }
+          if(config.Url_Logo) {
+            if (modoActual === "radio" || (modoActual === "video" && !urlVideo)) {
+              imgMonitor.src = config.Url_Logo;
+              imgMonitor.style.display = "block";
+            }
+          }
 
-        canvasCtx.lineTo(WIDTH, HEIGHT/2);
-        canvasCtx.stroke();
-      }
+          const boxRespuesta = document.getElementById("chatAdminBox");
+          if (config.Mensaje_Administrador && config.Mensaje_Administrador.toString().trim() !== "") {
+            boxRespuesta.innerHTML = `<strong>Cabina dice:</strong> ${config.Mensaje_Administrador}`;
+            boxRespuesta.style.display = "block";
+            document.getElementById("iconoCampanita").classList.add("activa");
+          } else {
+            boxRespuesta.style.display = "none";
+            document.getElementById("iconoCampanita").classList.remove("activa");
+          }
 
-      draw();
+          const bannerCantores = document.getElementById("bannerCantantes");
+          if (config.Cantantes_Destacados && config.Cantantes_Destacados.toString().trim() !== "") {
+            bannerCantores.innerHTML = `<i class="fas fa-star"></i> Cantante Destacado ➡️ ${config.Cantantes_Destacados}`;
+          } else {
+            bannerCantores.innerHTML = `<i class="fas fa-music"></i> Promocional: En busca de lista de cantantes destacados para mostrar`;
+          }
 
-      // Manejar interacción botones publicidad y redes sociales: alerta o ventana modal simple
-      btnPublicidad.addEventListener('none', () => {
-        alert(' Confirmar para entrar a la página de publicidad.');
-      });
+          const bannerAlertas = document.getElementById("bannerAlertas");
+          if(config.Estado_Banner === "Activo") {
+            bannerAlertas.className = "banner-eventos-concursos banner-verde";
+            bannerAlertas.innerHTML = `<i class="fas fa-gift"></i> ${config.Texto_Banner}`;
+          } else {
+            bannerAlertas.className = "banner-eventos-concursos banner-rojo";
+            bannerAlertas.innerText = config.Texto_Banner || "En estos momentos no tenemos concurso en la emisora le estaremos avisando";
+          }
 
-      btnRedes.addEventListener('click', () => {
-        alert('Página de Redes Sociales en construcción. Visita nuestras redes en el pie de página.');
-      });
-
-      // Simulación estado concurso (puedes cambiar a true para activo)
-      let concursoActivo = false;
-
-      function actualizarEstadoConcurso() {
-        if (concursoActivo) {
-          contestContainer.classList.remove('inactive');
-          contestContainer.classList.add('active');
-          contestContainer.textContent = '¡Concurso activo! Participa ahora y gana increíbles premios.';
-        } else {
-          contestContainer.classList.remove('active');
-          contestContainer.classList.add('inactive');
-          contestContainer.textContent = 'En estos momentos no tenemos concurso en la emisora le estaremos avisando';
-        }
-      }
-
-      actualizarEstadoConcurso();
-
-      // Reanudar audioContext en interacción (por políticas de autoplay)
-      function resumeAudioContext() {
-        if (audioContext.state === 'suspended') {
-          audioContext.resume();
-        }
-      }
-
-      ['click', 'touchstart'].forEach(evt => {
-        document.body.addEventListener(evt, resumeAudioContext, { once: true });
-      });
-    });
-    
-    
-    
-    
-     // Función para mostrar el mensaje de advertencia
-    function showWarning() {
-      const warning = document.getElementById('warning-message');
-      warning.style.display = 'block';
-      // Oculta el mensaje después de 3 segundos
-      setTimeout(() => {
-        warning.style.display = 'none';
-      }, 3000);
+          const capaManto = document.getElementById("pantallaMantenimiento");
+          if (config.Web_Bloqueada === "TRUE" || config.Web_Bloqueada === true) {
+            if(capaManto.style.display !== "flex") {
+              capaManto.style.display = "flex";
+              audioPlayer.pause(); videoPlayer.pause();
+              iniciarCronometroMantenimiento();
+            }
+          } else {
+            capaManto.style.display = "none";
+            detenerCronometroMantenimiento();
+          }
+        }).catch(err => console.log(err));
     }
 
-    // Deshabilitar clic derecho (abrir menú contextual)
-    window.addEventListener('contextmenu', function(event) {
-      event.preventDefault();
-      showWarning();
-    });
+    function toggleContacto() {
+      const box = document.getElementById("boxContacto");
+      box.style.display = box.style.display === "block" ? "none" : "block";
+      document.getElementById("iconoCampanita").classList.remove("activa");
+    }
 
-    // Detectar teclas que abren herramientas de desarrollo
-    window.addEventListener('keydown', function(event) {
-      // F12
-      if (event.key === 'F12') {
-        event.preventDefault();
-        showWarning();
+    function enviarMensaje() {
+      const input = document.getElementById("txtMensajeOyente");
+      if(input.value.trim() === "") return;
+
+      fetch(URL_SERVIDOR_API, {
+        method: "POST",
+        mode: "no-cors",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({ action: "registrarMensajeOyente", mensaje: input.value })
+      }).then(() => {
+        alert("¡Mensaje enviado al administrador de Vive FM!");
+        input.value = "";
+        toggleContacto();
+      });
+    }
+
+    function cambiarModo(modo) {
+      modoActual = modo;
+      document.getElementById("btnRadio").classList.toggle("activo", modo === "radio");
+      document.getElementById("btnVideo").classList.toggle("activo", modo === "video");
+      
+      videoPlayer.style.display = "none";
+      imgMonitor.style.display = "none";
+      ytContainer.style.display = "none";
+      ytContainer.innerHTML = "";
+
+      if (modo === "radio") {
+        videoPlayer.pause();
+        imgMonitor.style.display = "block";
+        if(reproduciendo) { audioPlayer.src = urlRadio; audioPlayer.play(); }
+      } else {
+        if (urlVideo && urlVideo.trim() !== "") {
+          if (urlVideo.includes("youtube.com") || urlVideo.includes("youtu.be")) {
+            ytContainer.style.display = "block";
+            audioPlayer.pause();
+            let videoId = urlVideo.split("v=") || urlVideo.split("/").pop();
+            if(videoId.includes("&")) videoId = videoId.split("&");
+            ytContainer.innerHTML = `<iframe width="100%" height="100%" src="https://youtube.com{videoId}?autoplay=1" frameborder="0" allow="autoplay; encrypted-media" allowfullscreen></iframe>`;
+          } else if (urlVideo.includes("facebook.com")) {
+            ytContainer.style.display = "block";
+            audioPlayer.pause();
+            ytContainer.innerHTML = `<iframe src="https://facebook.com{encodeURIComponent(urlVideo)}&show_text=0&autoplay=1" width="100%" height="100%" style="border:none;overflow:hidden" scrolling="no" frameborder="0" allowfullscreen="true" allow="autoplay; clipboard-write; encrypted-media; picture-in-picture; web-share"></iframe>`;
+          } else {
+            videoPlayer.style.display = "block";
+            videoPlayer.src = urlVideo;
+            audioPlayer.pause();
+            if(reproduciendo) videoPlayer.play();
+          }
+        } else {
+          imgMonitor.style.display = "block";
+          alert("La señal de video externa está en reposo. Seguimos en señal de Audio.");
+          cambiarModo('radio');
+        }
       }
-      // Ctrl+Shift+I, Ctrl+Shift+J, Ctrl+U
-      if (
-        (event.ctrlKey && event.shiftKey && (event.key === 'I' || event.key === 'J')) ||
-        (event.ctrlKey && event.key === 'U')
-      ) {
-        event.preventDefault();
-        showWarning();
+    }
+
+    function controlarReproduccion() {
+      reproduciendo = !reproduciendo;
+      const btn = document.getElementById("btnPlay");
+      const led = document.getElementById("ledSincro");
+      const txt = document.getElementById("txtSincro");
+      const bars = document.querySelectorAll(".barra-eq");
+      
+      if(reproduciendo) {
+        btn.innerHTML = '<i class="fas fa-pause"></i>';
+        txt.innerText = "⏳ Conectando...";
+        led.className = "led-indicador parpadeo-cargando";
+        
+        if(modoActual === "radio") {
+          audioPlayer.src = urlRadio;
+          audioPlayer.play().then(() => {
+            led.className = "led-indicador led-verde-activo";
+            txt.innerText = "🟢 Conectado";
+            bars.forEach(b => b.classList.add("animando"));
+            iniciarCronometroStreaming();
+            extraerMetadatosSimulados();
+          });
+        } else {
+          videoPlayer.play();
+          led.className = "led-indicador led-verde-activo";
+          txt.innerText = "🟢 Conectado";
+          iniciarCronometroStreaming();
+        }
+      } else {
+        btn.innerHTML = '<i class="fas fa-play"></i>';
+        led.className = "led-indicador";
+        txt.innerText = "⏳ En pausa";
+        audioPlayer.pause(); videoPlayer.pause();
+        bars.forEach(b => b.classList.remove("animando"));
+        detenerCronometroStreaming();
       }
-    });
-    
-    
-    
-  // 1. Seleccionar los elementos
-const playerSection = document.getElementById('player');
-const colorPicker = document.getElementById('colorPicker');
+    }
 
-// Configura aquí la opacidad que desees (0.0 = invisible, 1.0 = color fuerte)
-const opacidad = 0.3; 
+    function ajustarVolumen(val) {
+      audioPlayer.volume = val;
+      videoPlayer.volume = val;
+      const icono = document.getElementById("iconoVolumen");
+      if(val == 0) icono.className = "fas fa-volume-mute";
+      else if(val < 0.5) icono.className = "fas fa-volume-down";
+      else icono.className = "fas fa-volume-up";
+    }
 
-// Función para convertir Hexadecimal (#RRGGBB) a RGBA con transparencia
-function hexToRgba(hex, alpha) {
-    let r = parseInt(hex.slice(1, 3), 16);
-    let g = parseInt(hex.slice(3, 5), 16);
-    let b = parseInt(hex.slice(5, 7), 16);
-    return `rgba(${r}, ${g}, ${b}, ${alpha})`;
-}
+    function iniciarCronometroStreaming() {
+      clearInterval(cronoStreamingInterval);
+      cronoStreamingInterval = setInterval(() => {
+        segundosStreaming++;
+        document.getElementById("cronometroStreaming").innerText = formatearTiempo(segundosStreaming);
+      }, 1000);
+    }
 
-// 2. Cargar el color guardado al iniciar la página
-const savedColorHex = localStorage.getItem('playerColorHex');
+    function detenerCronometroStreaming() {
+      clearInterval(cronoStreamingInterval);
+    }
 
-if (savedColorHex) {
-    // Aplicamos el color con la transparencia al fondo
-    playerSection.style.backgroundColor = hexToRgba(savedColorHex, opacidad);
-    // El selector mantiene el color sólido original para que coincida la paleta
-    colorPicker.value = savedColorHex;
-}
+    function iniciarCronometroMantenimiento() {
+      clearInterval(cronoMantenimientoInterval);
+      segundosMantenimiento = 0;
+      cronoMantenimientoInterval = setInterval(() => {
+        segundosMantenimiento++;
+        document.getElementById("timerMantenimiento").innerText = "Tiempo transcurrido: " + formatearTiempo(segundosMantenimiento);
+      }, 1000);
+    }
 
-// 3. Escuchar el cambio de color, aplicar transparencia y guardar
-colorPicker.addEventListener('input', (event) => {
-    const selectedColorHex = event.target.value;
-    
-    // Aplicamos el color con transparencia en tiempo real
-    playerSection.style.backgroundColor = hexToRgba(selectedColorHex, opacidad);
-    
-    // Guardamos el código Hex original para que el selector no se desconfigure al recargar
-    localStorage.setItem('playerColorHex', selectedColorHex);
-});
+    function detenerCronometroMantenimiento() {
+      clearInterval(cronoMantenimientoInterval);
+    }
 
+    function formatearTiempo(totSegundos) {
+      let hrs = Math.floor(totSegundos / 3600);
+      let mins = Math.floor((totSegundos % 3600) / 60);
+      let segs = totSegundos % 60;
+      return `${hrs < 10 ? '0':''}${hrs}:${mins < 10 ? '0':''}${mins}:${segs < 10 ? '0':''}${segs}`;
+    }
 
+        function extraerMetadatosSimulados() {
+      setInterval(() => {
+        if(reproduciendo && modoActual === "radio") {
+          document.getElementById("txtMetadataCancion").innerText = "🎵 Escuchando: Alabanza de Adoración en Vivo - VIVE FM";
+        }
+      }, 5000);
+    }
+
+    sincronizarDatos();
+    setInterval(sincronizarDatos, 7000);
   </script>
-  </body>
-  </html>
+</body>
+</html>
